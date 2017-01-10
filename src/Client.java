@@ -6,46 +6,45 @@ class Client {
 	private String address; // 주소 
 	private String phoneNum; // 핸드폰번호 
 	private String credit; // 처음 계좌 생성 시 8등급
-	private Account[] accountArr = new Account[100]; // 계좌 생성을 위한 배열 
-	
-	private int accountCnt=0;
+	private AccountManager accountManager;
 	
 	public Client() {
 		
 	}
 	
 	public Client(String name, String address, String phoneNum, String credit) {
-		
 		this.name = name;
 		this.address = address;
 		this.phoneNum = phoneNum;
 		this.credit = credit;
+		
+		accountManager = new AccountManager();
 	}
 	
 	public void setAccountCnt(int accountCnt){
-		this.accountCnt = accountCnt;
+		accountManager.setAccountCnt(accountCnt);
 	}
 	
 	public int getAccountCnt(){
-		return accountCnt;
+		return accountManager.getAccountCnt();
 	}
-	
-	public void setAccountArray(Account[] accountArr){
-		this.accountArr = accountArr;
-	}
-	
-	public Account[] getAccountArray(){
-		return accountArr;
-	}
-	
-	public void setAccount(int index){
-		this.accountArr[index] = accountArr[index];
+
+	public void setAccount(Account account){
+		accountManager.setAccount(account);
 	}
 	
 	public Account getAccount(int index){
-		return accountArr[index];
+		return accountManager.getAccount(index);
 	}
 	
+	public void setAccountArray(Account[] accountArr){
+		accountManager.setAccountArray(accountArr);
+	}
+	
+	public Account[] getAccountArray(){
+		return accountManager.getAccountArray();
+	}
+
 	public void setName(String name){
 		this.name = name;
 	}
@@ -77,6 +76,8 @@ class Client {
 	public String getCredit() {
 		return credit;
 	}
-	  
-
+	
+	public void showClientInfo() {
+		System.out.println("이름: " + name +" | "+ "주소: " + address +" | "+ "전화번호: " + phoneNum +" | "+ "신용등급	: " + credit);
+	}
 }

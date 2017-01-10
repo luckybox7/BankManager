@@ -2,24 +2,22 @@ import java.util.Scanner;
 
 class MenuTeller {
 	
-	Scanner sc1 = new Scanner(System.in);
-	
-	MenuSet ms = new MenuSet();
-	Teller tr = new Teller();
+	Scanner sc = new Scanner(System.in);
+	Teller teller = new Teller();
 
 	public void tellerJob() {
 
 		while (true) {
 			MenuSet.printTellerMenu();
-			int tellerChoice = sc1.nextInt();
-			sc1.nextLine();
+			int tellerChoice = sc.nextInt();
+			sc.nextLine();
 
 			switch (tellerChoice) {
 			case TELLER_MENU.OPENACCOUNT: // 계좌 개설
-				tr.openAccount();
+				teller.openAccount();
 				break;
 			case TELLER_MENU.CLOSEACCOUNT:
-				tr.closeAccount();
+				teller.closeAccount();
 				break;
 			case TELLER_MENU.SHOWCLIENT:
 

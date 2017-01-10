@@ -1,14 +1,16 @@
 import java.util.Scanner;
 
 class MenuClient {
-	Scanner sc2 = new Scanner(System.in);
+	
+	Scanner sc = new Scanner(System.in);
+	Client client = new Client();
 
 	public void clientJob() {
 
 		while (true) {
 			MenuSet.printClientMenu();
-			int clientChoice = sc2.nextInt();
-			sc2.nextLine();
+			int clientChoice = sc.nextInt();
+			sc.nextLine();
 			
 			switch(clientChoice) {
 			case CLIENT_MENU.DEPOSIT:

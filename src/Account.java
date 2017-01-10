@@ -9,9 +9,9 @@ class Account { //자유입출금
 		
 	}
 	
-	public Account(String accountNum, int balance){
+	public Account(String accountNum){
 		this.accountNum = accountNum;
-		this.balance = balance;
+		this.balance = 0;
 	}
 	
 	public void setAccountNum(String accountNum){
@@ -36,14 +36,20 @@ class Account { //자유입출금
 	}
 	
 	public void withdraw(int money){
+		// 계좌선택 필요
 		balance -= money;
+	}
+	
+	public void printAccountInfo() {
+		System.out.println("계좌번호 : "+accountNum);
+		System.out.println("잔액 : " + balance);
 	}
 }
 
 class CheckAccount extends Account{
 	
-	public CheckAccount(String accountNum, int balance){
-		super(accountNum, balance);
+	public CheckAccount(String accountNum){
+		super(accountNum);
 	}
 }
 
@@ -51,8 +57,8 @@ class MinusAccount extends Account{ // 마이너스 계좌
 
 	protected String creditLimit; // 대출한도 
 	 
-	public MinusAccount(String accountNum, int balance, String creditLimit){
-		super(accountNum, balance);
+	public MinusAccount(String accountNum, String creditLimit){
+		super(accountNum);
 		this.creditLimit = creditLimit;
 	}
 }
