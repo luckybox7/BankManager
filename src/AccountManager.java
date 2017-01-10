@@ -34,5 +34,23 @@ public class AccountManager {
 		return accountArr;
 	}
 	
+	public void setClearAll(Account[] accountArr) {
+		this.accountArr = accountArr;
+		//this.accountArr = new Account[100];
+		accountCnt = 0;
+		
+		
+	}
+	
+	public void setSpecificAccount(int index) {
+		accountArr[index] = null;
+		accountCnt = accountCnt-1;
+	}
+	
+	public void setRearrangeAccount(int index) {
+		for(int i=index; i<accountCnt; i++) {
+			accountArr[i] = accountArr[i+1];
+		}
+	}
 
 }

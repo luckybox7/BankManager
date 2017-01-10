@@ -195,33 +195,21 @@ class Handler {
 	}
 	
 	public void deleteSelectedAccount(int duplicateNameIndex, int balanceResultIndex){
-		if( balanceResultIndex == -1 ) {
+		
+		switch(balanceResultIndex) {
+		case -1:
 			System.out.println("계좌를 삭제할 수 없습니다. 계좌의 잔액이 0원인지 확인하세요.");
 			// 모든 계좌정보 보여주기 
 			showAccountInfo(duplicateNameIndex);
-			
-		}else if( balanceResultIndex == -2 ) { 
-			System.out.println("모든 계좌를 삭제합니다.");
-			clientManager.getClient(duplicateNameIndex).setAccountArray(null);
-			clientManager.getClient(duplicateNameIndex).setAccountCnt(0);
-			System.out.println("모든 계좌 삭제 완료");
-		}else { // 특정 인덱스에 있는 삭제하고 싶으면 , 계좌 삭제 후 인덱스를 하나씩 땡겨줘야 한다
-			
-//			int updateIndex = clientManager.getClient(duplicateNameIndex).getAccountCnt()-1; // 원래 있던 Cnt개수를 하나 줄인다 
-//			
-//			clientManager.getClient(duplicateNameIndex).setAccountCnt(balanceResultIndex); // 해당 고객이 입력한 계좌 위치를 찾아서 
-//			clientManager.getClient(duplicateNameIndex).setAccount(null); // null로 삭제를 해주고 
-//			clientManager.getClient(duplicateNameIndex).setAccountCnt(updateIndex); // accountCnt 하나 줄여준다 
-//			System.out.println("해당 계좌를 삭제했습니다");
-//		
-//			// 삭제한 계좌가 null로 남아있지 않도록 배열 재조정 
-//			for(int i=balanceResultIndex; i<clientManager.getClient(duplicateNameIndex).getAccountCnt(); i++) { // null로 바귄곳부터 끝까지 	
-//				Account account = clientManager.getClient(duplicateNameIndex).getAccount(i+1); // null값 다음 계좌정보를 가져온다 
-//
-//				clientManager.getClient(duplicateNameIndex).setAccountCnt(i); // null값으로 변한 곳을 찾아서
-//				clientManager.getClient(duplicateNameIndex).setAccount(account); // 다음에 있던 계좌를 넣어준다 
-//				clientManager.getClient(duplicateNameIndex).setAccountCnt(updateIndex); // accountCnt 하나 줄여준다 
-//			}
+			break;
+		case -2:
+			clientManager.getClient(duplicateNameIndex).clearAllAccount();
+			clientManager.setClearClient(duplicateNameIndex);
+			break;
+		default: // 인덱스가 넘어오는 경우 
+			clientManager.getClient(duplicateNameIndex).clearSpecificAccount(balanceResultIndex);
+			clientManager.getClient(duplicateNameIndex).rearrangeAccount(balanceResultIndex);
+			break;
 		}
 	}
 	

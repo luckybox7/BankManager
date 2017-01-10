@@ -25,4 +25,13 @@ public class ClientManager {
 	public Client getClient(int index) {
 		return client[index];
 	}
+	
+	public void setClearClient(int index) {
+//		client[index] = null;
+		
+		for(int i=index; i<clientCnt; i++) {
+			client[i] = client[i+1];
+		}
+		clientCnt = clientCnt-1;
+	}
 }

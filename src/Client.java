@@ -77,6 +77,20 @@ class Client {
 		return credit;
 	}
 	
+	public void clearAllAccount() {	
+		System.out.println("모든 계좌를 삭제합니다");
+		accountManager.setClearAll(null);
+		System.out.println("모든 계좌 삭제 완료");
+	}
+	
+	public void clearSpecificAccount(int index) {
+		accountManager.setSpecificAccount(index);
+	}
+	
+	public void rearrangeAccount(int index) {
+		accountManager.setRearrangeAccount(index);
+	}
+	
 	public void showClientInfo() {
 		System.out.println("이름: " + name +" | "+ "주소: " + address +" | "+ "전화번호: " + phoneNum +" | "+ "신용등급	: " + credit);
 	}
