@@ -7,19 +7,21 @@ class BankMain {
 		
 		MenuTeller tr = new MenuTeller();
 		MenuClient ct = new MenuClient();
+		BankManageHandler bankManageHandler = new BankManageHandler();
+		BankManageIOHandler bankManageIOHandler = new BankManageIOHandler();
 		
 		System.out.println("===== 은행관리 프로그램을 시작합니다 =====");
 		while (true) {
-			BankManageIOHandler.printInitMenu();
+			bankManageIOHandler.printInitMenu();
 			int choice = sc.nextInt();
 			sc.nextLine(); // 버퍼비우기  
 
 			switch (choice) {
 			case INIT_MENU.TELLER:
-				tr.tellerJob();
+				tr.tellerJob(bankManageHandler, bankManageIOHandler);
 				break;
 			case INIT_MENU.CLIENT:
-				ct.clientJob();
+				ct.clientJob(bankManageHandler, bankManageIOHandler);
 				break;
 			case INIT_MENU.EXIT:
 				System.out.println("프로그램을 종료합니다");

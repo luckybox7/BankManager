@@ -13,7 +13,7 @@ interface CLIENT_MENU {
 }
 
 class BankManageIOHandler {
-	public static void printInitMenu() {
+	public void printInitMenu() {
 		System.out.println("===== 원하는 업무를 선택해주세요    =====");
 		System.out.println("1. 은행원 ");
 		System.out.println("2. 고객 ");
@@ -22,7 +22,7 @@ class BankManageIOHandler {
 		System.out.print("선택>> ");
 	}
 
-	public static void printTellerMenu() {
+	public void printTellerMenu() {
 		System.out.println("===== 은행원 업무를 시작합니다 ====");
 		System.out.println("1. 새로운 계좌 개설 ");
 		System.out.println("2. 계좌 해약/취소 ");
@@ -32,7 +32,7 @@ class BankManageIOHandler {
 		System.out.print("선택>> ");
 	}
 
-	public static void printClientMenu() {
+	public void printClientMenu() {
 		System.out.println("===== 원하는 서비스를 선택하세요 ====");
 		System.out.println("1. 입금 ");
 		System.out.println("2. 출금 ");

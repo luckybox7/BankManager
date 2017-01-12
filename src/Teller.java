@@ -2,8 +2,13 @@ import java.util.Scanner;
 
 class Teller {
 	
-	BankManageHandler bankManageHandler = new BankManageHandler();
-	BankManageIOHandler bankManageIOHandler = new BankManageIOHandler();
+	private BankManageHandler bankManageHandler;
+	private BankManageIOHandler bankManageIOHandler;
+	
+	public Teller(BankManageHandler bankManageHandler, BankManageIOHandler bankManageIOHandler) {
+		this.bankManageHandler = bankManageHandler;
+		this.bankManageIOHandler = bankManageIOHandler;
+	}
 	
 	public void openAccount() {
 		

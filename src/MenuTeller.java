@@ -3,12 +3,13 @@ import java.util.Scanner;
 class MenuTeller {
 	
 	Scanner sc = new Scanner(System.in);
-	Teller teller = new Teller();
+	
 
-	public void tellerJob() {
-
+	public void tellerJob(BankManageHandler bankManageHandler, BankManageIOHandler bankManageIOHandler) {
+		Teller teller = new Teller(bankManageHandler, bankManageIOHandler);
+		
 		while (true) {
-			BankManageIOHandler.printTellerMenu();
+			bankManageIOHandler.printTellerMenu();
 			int tellerChoice = sc.nextInt();
 			sc.nextLine();
 

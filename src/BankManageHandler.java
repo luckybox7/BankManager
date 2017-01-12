@@ -3,7 +3,7 @@ import java.util.Scanner;
 class BankManageHandler {
 
 	ClientManager clientManager = new ClientManager();
-	BankManageIOHandler ioHandler = new BankManageIOHandler();
+	BankManageIOHandler bankManageIOHandler = new BankManageIOHandler();
 	BankManageHelper bankManagerHelper = new BankManageHelper();
 	
 	final private int NOT_FOUND = -1;
@@ -21,7 +21,7 @@ class BankManageHandler {
 	public void addNewClient(String name, int index) { // 신규인지 기존인지 확인 후 회원정보까지 입력 
 											
 		if (index == NOT_FOUND) {		
-			Client newClient = ioHandler.typeClientData(name);
+			Client newClient = bankManageIOHandler.typeClientData(name);
 			clientManager.setClient(newClient);
 		} else {
 			System.out.println("기존 고객입니다. 해당 정보에 계좌만 추가합니다.");
@@ -60,7 +60,7 @@ class BankManageHandler {
 
 	public Account createAccount() {
 
-		int selectResult = ioHandler.selectAccount(); // 계좌선택한 결과 찾기
+		int selectResult = bankManageIOHandler.selectAccount(); // 계좌선택한 결과 찾기
 		String tempAccountNum;
 		while (true) {
 			tempAccountNum = createAccountNum(selectResult); // 계좌생성 
@@ -125,7 +125,7 @@ class BankManageHandler {
 	public int scanSpecificAccount(int duplicateNameIndex) {
 		
 		int balanceResultIndex = 0;
-		String selectedAccountNum = ioHandler.selectAccountNum();
+		String selectedAccountNum = bankManageIOHandler.selectAccountNum();
 		
 		for(int i=0; i<clientManager.getClient(duplicateNameIndex).getAccountCnt(); i++) { // 해당 이름의 위치에서 갖고 있는 계좌 수만큼 반복하면서 	
 			if(selectedAccountNum.equals(clientManager.getClient(duplicateNameIndex).getAccount(i).getAccountNum())){  // 입력받은 계좌번호와 동일한 계좌번호를 찾은 다음 
@@ -221,7 +221,7 @@ class BankManageHandler {
 			if(tempCheckAccount.compareTo(tempAccountType)==0) { // 자유입출금 계좌면 
 				checkAccountTotalBalance += clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
 			}
-		}
+		} 
 		
 		return checkAccountTotalBalance;
 	}
@@ -263,7 +263,7 @@ class BankManageHandler {
 			clientManager.getClient(i).showClientBasicInfo();
 			printAccountInfo(i);
 			printTotalBalance(i);
-			System.out.println("");
+			System.out.println(""); 
 		}
 	}
 	
@@ -287,5 +287,18 @@ class BankManageHandler {
 				return;
 			}
 		}
+	}
+	
+	public void deposit() {
+		String typedName = bankManageIOHandler.typeName(); // 이름 입력받고 
+		int findNameResultIndex = findNameGetIndex(typedName); // 이름 인덱스 확인 후 
+		printAccountInfo(findNameResultIndex); // 계좌 전부 보여주고 
+		String selectedAccountNum = bankManageIOHandler.selectAccountNum(); // 계좌선택하고
+		int money = bankManageIOHandler.putMoney(); // 입금액 입력받고 
+		depositAction(findNameResultIndex, selectedAccountNum, money);
+	}
+	
+	public void withdraw() {
+		
 	}
 }

@@ -5,16 +5,16 @@ class MenuClient {
 	Scanner sc = new Scanner(System.in);
 	Client client = new Client();
 
-	public void clientJob() {
+	public void clientJob(BankManageHandler bankManageHandler, BankManageIOHandler bankManageIOHandler) {
 
 		while (true) {
-			BankManageIOHandler.printClientMenu();
+			bankManageIOHandler.printClientMenu();
 			int clientChoice = sc.nextInt();
 			sc.nextLine();
 			
 			switch(clientChoice) {
 			case CLIENT_MENU.DEPOSIT:
-				client.deposit();
+				bankManageHandler.deposit();
 				break;
 			case CLIENT_MENU.WITHDRAW:
 				
