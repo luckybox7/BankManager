@@ -10,7 +10,7 @@ class BankMain {
 		
 		System.out.println("===== 은행관리 프로그램을 시작합니다 =====");
 		while (true) {
-			MenuSet.printInitMenu();
+			BankManageIOHandler.printInitMenu();
 			int choice = sc.nextInt();
 			sc.nextLine(); // 버퍼비우기  
 

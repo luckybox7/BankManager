@@ -8,13 +8,13 @@ class MenuClient {
 	public void clientJob() {
 
 		while (true) {
-			MenuSet.printClientMenu();
+			BankManageIOHandler.printClientMenu();
 			int clientChoice = sc.nextInt();
 			sc.nextLine();
 			
 			switch(clientChoice) {
 			case CLIENT_MENU.DEPOSIT:
-				
+				client.deposit();
 				break;
 			case CLIENT_MENU.WITHDRAW:
 				

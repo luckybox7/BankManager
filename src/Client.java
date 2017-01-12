@@ -2,6 +2,9 @@ import java.util.Scanner;
 
 class Client {
 	
+	BankManageHandler bankManageHandler = new BankManageHandler();
+	BankManageIOHandler bankManageIOHandler = new BankManageIOHandler();
+	
 	private String name; // 이름 
 	private String address; // 주소 
 	private String phoneNum; // 핸드폰번호 
@@ -91,7 +94,18 @@ class Client {
 		accountManager.setRearrangeAccount(index);
 	}
 	
-	public void showClientInfo() {
-		System.out.println("이름: " + name +" | "+ "주소: " + address +" | "+ "전화번호: " + phoneNum +" | "+ "신용등급	: " + credit);
+	public void showClientBasicInfo() {
+		System.out.println(" ==== 계좌 정보를 출력합니다 ==== ");
+		System.out.println("이름: " + name +" | "+ "주소: " + address +" | "+ "전화번호: " + phoneNum +" | "+ "신용등급: " + credit);
+		System.out.println("----------------------------");
+	}
+	
+	public void deposit() {
+		String typedName = bankManageIOHandler.typeName(); // 이름 입력받고 
+		int findNameResultIndex = bankManageHandler.findNameGetIndex(typedName); // 이름 인덱스 확인 후 
+		bankManageHandler.printAccountInfo(findNameResultIndex); // 계좌 전부 보여주고 
+		String selectedAccountNum = bankManageIOHandler.selectAccountNum(); // 계좌선택하고
+		int money = bankManageIOHandler.putMoney(); // 입금액 입력받고 
+		bankManageHandler.depositAction(findNameResultIndex, selectedAccountNum, money);
 	}
 }

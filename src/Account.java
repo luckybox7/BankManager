@@ -1,9 +1,14 @@
 
 class Account { //자유입출금 
 	
+	BankManageHandler bankManageHandler = new BankManageHandler();
+	BankManageIOHandler bankManageIOHandler = new BankManageIOHandler();
+	
+	public final int MAX_TRANSACTIONS = 100;
 	protected String accountNum; // 계좌번호 
 	protected int balance; // 잔액
-	protected Transactions[] trans = new Transactions[100]; // 거래내역
+	protected Transactions[] trans = new Transactions[MAX_TRANSACTIONS]; // 거래내역
+	protected String accountType; // 계좌종류
 	
 	public Account(){
 		
@@ -30,19 +35,8 @@ class Account { //자유입출금
 		return balance;
 	}
 	
-	public void deposit(int money){
-		// 계좌선택 필요
-		balance += money;
-	}
-	
-	public void withdraw(int money){
-		// 계좌선택 필요
-		balance -= money;
-	}
-	
-	public void printAccountInfo() {
-		System.out.println("계좌번호 : "+accountNum);
-		System.out.println("잔액 : " + balance);
+	public String getAccountType() {
+		return accountType;
 	}
 }
 
@@ -50,6 +44,7 @@ class CheckAccount extends Account{
 	
 	public CheckAccount(String accountNum){
 		super(accountNum);
+		accountType = "자유입출금 계좌";
 	}
 }
 
@@ -60,5 +55,6 @@ class MinusAccount extends Account{ // 마이너스 계좌
 	public MinusAccount(String accountNum, String creditLimit){
 		super(accountNum);
 		this.creditLimit = creditLimit;
+		accountType = "마이너스 계좌";
 	}
 }

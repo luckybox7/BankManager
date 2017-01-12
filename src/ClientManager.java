@@ -1,11 +1,15 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ClientManager {
 	
-	private Client[] client;
+	private Client[] clientList;
 	private int clientCnt;
+	final private int MAX_CLIENT = 100;
+	private Client[] tempClientList; // 정렬을 위한 임시배열 추가 
 	
 	public ClientManager() {
-		client = new Client[100];
+		clientList = new Client[MAX_CLIENT];
 		clientCnt=0;
 	}
 	
@@ -18,20 +22,29 @@ public class ClientManager {
 	}
 	
 	public void setClient(Client client) {
-		this.client[clientCnt] = client;
+		this.clientList[clientCnt] = client;
 		clientCnt++;
 	}
 	
 	public Client getClient(int index) {
-		return client[index];
+		return clientList[index];
 	}
 	
 	public void setClearClient(int index) {
 //		client[index] = null;
 		
 		for(int i=index; i<clientCnt; i++) {
-			client[i] = client[i+1];
+			clientList[i] = clientList[i+1];
 		}
 		clientCnt = clientCnt-1;
+	}
+	
+	public Client getTempClient(int index) {
+		return tempClientList[index];
+	}
+	
+	public void setSortClientList() { // 가나다 순 정렬하기 
+		tempClientList = new Client[MAX_CLIENT];	
+		
 	}
 }

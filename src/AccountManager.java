@@ -1,11 +1,12 @@
 
 public class AccountManager {
 	
+	public final int MAX_ACCOUNT = 100;
 	private Account[] accountArr; // 계좌 생성을 위한 배열 
 	private int accountCnt;
 	
 	public AccountManager() {
-		accountArr = new Account[100];
+		accountArr = new Account[MAX_ACCOUNT];
 		accountCnt = 0;
 	}
 
@@ -37,9 +38,7 @@ public class AccountManager {
 	public void setClearAll(Account[] accountArr) {
 		this.accountArr = accountArr;
 		//this.accountArr = new Account[100];
-		accountCnt = 0;
-		
-		
+		accountCnt = 0;	
 	}
 	
 	public void setSpecificAccount(int index) {

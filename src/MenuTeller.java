@@ -8,7 +8,7 @@ class MenuTeller {
 	public void tellerJob() {
 
 		while (true) {
-			MenuSet.printTellerMenu();
+			BankManageIOHandler.printTellerMenu();
 			int tellerChoice = sc.nextInt();
 			sc.nextLine();
 
@@ -20,7 +20,7 @@ class MenuTeller {
 				teller.closeAccount();
 				break;
 			case TELLER_MENU.SHOWCLIENT:
-
+				teller.showClient();
 				break;
 			case TELLER_MENU.EXIT:
 
