@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 class Client {
@@ -96,4 +98,22 @@ class Client {
 		System.out.println("이름: " + name +" | "+ "주소: " + address +" | "+ "전화번호: " + phoneNum +" | "+ "신용등급: " + credit);
 		System.out.println("----------------------------");
 	}
+	
+	public static Comparator<Client> clientNameComparator = new Comparator<Client>() {
+
+		@Override
+		public int compare(Client c1, Client c2) {
+			if(c1==null && c2==null){
+				return 0;
+			}else if(c1==null){
+				return 1;
+			}else if(c2==null){
+				return -1;
+			}
+			// TODO Auto-generated method stub
+			return c1.getName().compareTo(c2.getName());
+		}
+	
+	};
+	
 }

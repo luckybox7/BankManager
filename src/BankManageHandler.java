@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 class BankManageHandler {
@@ -269,6 +270,8 @@ class BankManageHandler {
 	
 	public void printAllInfo() {		
 		// clientManager.setSortClientList(); // 이름 순으로 정렬하고나서 
+		
+		Arrays.sort(clientManager.getClientList(), Client.clientNameComparator);
 		printEveryInfo(); // 모든 정보 출력 (이름, 주소, 전화번호, 신용등급)
 		
 		// 정렬 아직 안했음 

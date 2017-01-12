@@ -39,8 +39,8 @@ public class ClientManager {
 		clientCnt = clientCnt-1;
 	}
 	
-	public Client getTempClient(int index) {
-		return tempClientList[index];
+	public Client[] getClientList() {
+		return clientList;
 	}
 	
 	public void setSortClientList() { // 가나다 순 정렬하기 
