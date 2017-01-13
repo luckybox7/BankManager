@@ -17,13 +17,13 @@ class MenuClient {
 				bankManageHandler.deposit();
 				break;
 			case CLIENT_MENU.WITHDRAW:
-				
+				bankManageHandler.withdraw();
 				break;
 			case CLIENT_MENU.ACCOUNTTRANSFER:
-				
+				bankManageHandler.accountTransfer();
 				break;
 			case CLIENT_MENU.SHOWBALANCE:
-				
+				bankManageHandler.showBalance();
 				break;
 			case CLIENT_MENU.SHOWSTATEMENT:
 				

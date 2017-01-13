@@ -109,7 +109,7 @@ class BankManageIOHandler {
 		return selectedAccountNum;
 	}
 	
-	public int selectPrintType() {
+	public int selectPrintClientType() {
 		
 		Scanner sc = new Scanner(System.in);
 		int selectedPrintType = 0;
@@ -125,14 +125,43 @@ class BankManageIOHandler {
 		return selectedPrintType;
 	}
 	
-	public int putMoney() {
+	public int selectPrintAccountInfoType() {
+		Scanner sc = new Scanner(System.in);
+		int selectedPrintType = 0;
+		
+		System.out.println("출력하고자 하는 유형을 선택하세요. ");
+		System.out.println("1. 모든 계좌 정보 출력");
+		System.out.println("2. 특정 계좌 정보 출력");
+		System.out.print("선택 >> ");
+		
+		selectedPrintType= sc.nextInt();
+		sc.nextLine();
+		
+		return selectedPrintType;
+	}
+	
+	public int typeMoney() {
 		int money = 0;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("입금할 금액을 입력하세요.");
 		System.out.print("입력 >> ");
 		money = sc.nextInt();
 		sc.nextLine();
 		
 		return money;
+	}
+	
+	public int checkProcess() {
+		Scanner sc = new Scanner(System.in);
+		
+		int checkProcessResult=0;
+		System.out.println("계좌이체를 계속해서 진행합니다.");
+		System.out.println("1. 확인");
+		System.out.println("2. 취소");
+		System.out.print("선택 >> ");
+		
+		checkProcessResult = sc.nextInt();
+		sc.nextLine();
+		
+		return checkProcessResult;
 	}
 }

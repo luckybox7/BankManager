@@ -32,7 +32,7 @@ class Teller {
 
 	public void showClient() {
 		
-		int printedType = bankManageIOHandler.selectPrintType();
+		int printedType = bankManageIOHandler.selectPrintClientType();
 		
 		switch(printedType){
 		case 1:
