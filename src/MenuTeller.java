@@ -3,7 +3,6 @@ import java.util.Scanner;
 class MenuTeller {
 	
 	Scanner sc = new Scanner(System.in);
-	
 
 	public void tellerJob(BankManageHandler bankManageHandler, BankManageIOHandler bankManageIOHandler) {
 		Teller teller = new Teller(bankManageHandler, bankManageIOHandler);

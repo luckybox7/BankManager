@@ -164,4 +164,47 @@ class BankManageIOHandler {
 		
 		return checkProcessResult;
 	}
+	
+	public int selectTransactionPeriod() {
+		Scanner sc = new Scanner(System.in);
+		
+		int selectedPeriod=0;
+		System.out.println("거래 기간을 선택하세요.");
+		System.out.println("1. 오늘");
+		System.out.println("2. 일주일");
+		System.out.println("3. 한달");
+		System.out.print("선택 >> ");
+		selectedPeriod = sc.nextInt();
+		sc.nextLine();
+		
+		return selectedPeriod;
+	}
+	
+	public int putMonthInfo() {
+		Scanner sc = new Scanner(System.in);
+		
+		int transMonth = 0;
+		System.out.println("거래 월 선택 ( 1 ~ 12 )");
+		System.out.print("선택 >> ");
+		
+		transMonth = sc.nextInt();
+		sc.nextLine();
+		
+		return transMonth;
+	}
+	
+	public int putDayInfo() {
+		Scanner sc = new Scanner(System.in);
+		
+		int transMonth = 0;
+		System.out.println("거래 일 선택 ( 1 ~ 31 )");
+		System.out.print("선택 >> ");
+		
+		transMonth = sc.nextInt();
+		sc.nextLine();
+		
+		return transMonth;
+	}
+	
+	
 }

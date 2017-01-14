@@ -1,13 +1,10 @@
 
 class Account { //자유입출금 
-	
-	BankManageHandler bankManageHandler = new BankManageHandler();
-	BankManageIOHandler bankManageIOHandler = new BankManageIOHandler();
-	
+		
 	public final int MAX_TRANSACTIONS = 100;
 	protected String accountNum; // 계좌번호 
 	protected int balance; // 잔액
-	protected Transactions[] trans = new Transactions[MAX_TRANSACTIONS]; // 거래내역
+	protected TransactionManager tManager;
 	protected String accountType; // 계좌종류
 	
 	public Account(){
@@ -17,6 +14,8 @@ class Account { //자유입출금
 	public Account(String accountNum){
 		this.accountNum = accountNum;
 		this.balance = 0;
+		
+		tManager = new TransactionManager();
 	}
 	
 	public void setAccountNum(String accountNum){

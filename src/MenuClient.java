@@ -26,7 +26,7 @@ class MenuClient {
 				bankManageHandler.showBalance();
 				break;
 			case CLIENT_MENU.SHOWSTATEMENT:
-				
+				bankManageHandler.showStatement();
 				break;
 			case CLIENT_MENU.EXIT:
 				return;

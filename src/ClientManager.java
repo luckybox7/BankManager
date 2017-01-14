@@ -1,12 +1,8 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class ClientManager {
 	
 	private Client[] clientList;
 	private int clientCnt;
 	final private int MAX_CLIENT = 100;
-	private Client[] tempClientList; // 정렬을 위한 임시배열 추가 
 	
 	public ClientManager() {
 		clientList = new Client[MAX_CLIENT];
@@ -41,10 +37,5 @@ public class ClientManager {
 	
 	public Client[] getClientList() {
 		return clientList;
-	}
-	
-	public void setSortClientList() { // 가나다 순 정렬하기 
-		tempClientList = new Client[MAX_CLIENT];	
-		
 	}
 }

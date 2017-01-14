@@ -19,9 +19,9 @@ class BankManageHandler {
 		return NOT_FOUND; // 없는 경우 
 	}
 
-	public void addNewClient(String name, int index) { // 신규인지 기존인지 확인 후 회원정보까지 입력 
+	public void addNewClient(String name, int foundNameIndex) { // 신규인지 기존인지 확인 후 회원정보까지 입력 
 											
-		if (index == NOT_FOUND) {		
+		if (foundNameIndex == NOT_FOUND) {		
 			Client newClient = bankManageIOHandler.typeClientData(name);
 			clientManager.setClient(newClient);
 		} else {
@@ -85,25 +85,32 @@ class BankManageHandler {
 		return account;
 	}
 	
-	public void accountToClient(int index, Account account){
+	public void accountToClient(int foundNameIndex, Account account){
 		
-		if(index == NOT_FOUND){ // 중복이 없으면 
+		if(foundNameIndex == NOT_FOUND){ // 중복이 없으면 
 			clientManager.getClient(clientManager.getClientCnt()-1).setAccount(account);
 		}else{ // 중복이 있으면 
-			clientManager.getClient(index).setAccount(account);
+			clientManager.getClient(foundNameIndex).setAccount(account);
 		}
 	}
 	
-	public void showAllAccountInfo(int findNameResultIndex) {
+	public void showAllAccountInfo(int foundNameIndex) {
 		System.out.println("==== 모든 계좌 정보가 표시됩니다 ====");
 		
 		String showAccountNum;
 		int showBalance;
 		
-		for(int i=0; i<clientManager.getClient(findNameResultIndex).getAccountCnt(); i++) {
-			showAccountNum = clientManager.getClient(findNameResultIndex).getAccount(i).getAccountNum();
-			showBalance = clientManager.getClient(findNameResultIndex).getAccount(i).getBalance();
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+			showAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum();
+			showBalance = clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
 			System.out.println("계좌번호 : "+ showAccountNum +" // 잔액 : "+ showBalance);
+		}
+	}
+	
+	public void showTransactionList(int foundNameIndex, int foundAccountNumIndex) {
+		System.out.println("==== 모든 거래내역이 표시됩니다 ====");
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransCnt(); i++) {
+			printTransactionInfo(foundNameIndex, foundAccountNumIndex, i);
 		}
 	}
 	
@@ -143,34 +150,34 @@ class BankManageHandler {
 		return balanceResultIndex;
 	}
 	
-	public int checkLeftBalance(int findNameResultIndex, int deleteType) {
+	public int checkLeftBalance(int foundNameIndex, int deleteType) {
 		
 		int balanceResultIndex = 0;
 		
 		if(deleteType == 1) { // 고객이 갖고 있는 전체 계좌 잔액 확인 
-			balanceResultIndex = scanAllAccount(findNameResultIndex);
+			balanceResultIndex = scanAllAccount(foundNameIndex);
 		}else{ // 특정 계좌 잔액 확인
-			balanceResultIndex = scanSpecificAccount(findNameResultIndex);
+			balanceResultIndex = scanSpecificAccount(foundNameIndex);
 		}
 		return balanceResultIndex;
 	}
 	
-	public void deleteSelectedAccount(int findNameResultIndex, int balanceResultIndex){
+	public void deleteSelectedAccount(int foundNameIndex, int balanceResultIndex){
 		
 		switch(balanceResultIndex) {
 		case NOT_FOUND:
 			System.out.println("계좌를 삭제할 수 없습니다. 계좌의 잔액이 0원인지 확인하세요.");
 			// 모든 계좌정보 보여주기 
-			showAllAccountInfo(findNameResultIndex);
+			showAllAccountInfo(foundNameIndex);
 			break;
-		case -2:
-			clientManager.getClient(findNameResultIndex).clearAllAccount();
-			clientManager.setClearClient(findNameResultIndex);
+		case -2: // 전체 삭제 
+			clientManager.getClient(foundNameIndex).clearAllAccount();
+			clientManager.setClearClient(foundNameIndex);
 			break;
 		// dafault를 사용하면 안될 것 같은데 
 		default: // 인덱스가 넘어오는 경우 
-			clientManager.getClient(findNameResultIndex).clearSpecificAccount(balanceResultIndex);
-			clientManager.getClient(findNameResultIndex).rearrangeAccount(balanceResultIndex);
+			clientManager.getClient(foundNameIndex).clearSpecificAccount(balanceResultIndex);
+			clientManager.getClient(foundNameIndex).rearrangeAccount(balanceResultIndex); // 배열 재배치 
 			break;
 		}
 	}
@@ -186,11 +193,11 @@ class BankManageHandler {
 		return nameIndex;
 	}
 	
-	public int findSameAccountNum(int findNameResultIndex, String accountNum) {
+	public int findSameAccountNum(int foundNameIndex, String accountNum) {
 		int tempAccountNumIndex = 0;
 		
-		for(int i=0; i<clientManager.getClient(findNameResultIndex).getAccountCnt(); i++) {
-			String tempAccountNum = clientManager.getClient(findNameResultIndex).getAccount(i).getAccountNum();
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+			String tempAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum();
 			if(accountNum.compareTo(tempAccountNum)==0) {
 				tempAccountNumIndex = i;
 				break;
@@ -233,6 +240,24 @@ class BankManageHandler {
 		printedAccountBalance = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).getBalance();
 		
 		System.out.println("계좌종류: "+ printedAccountType + " | " + "계좌번호: "+ printedAccountNum + " | " + "잔액: "+ printedAccountBalance);
+	}
+	
+	public void printTransactionInfo(int foundNameIndex, int foundAccountNumIndex, int foundTransactionIndex) {
+		int printedMonth;
+		int printedDay;
+		int printedMoney;
+		String printedType;
+		int printedNum;
+		int printedBalance;
+		
+		printedMonth = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex).getMonth();
+		printedDay = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex).getDay();
+		printedMoney = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex).getTransactionMoney();
+		printedType = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex).getTransactionType();
+		printedNum = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex).getTransactionNum(); // 수정 필요
+		printedBalance = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex).getTransactionBalance();
+		
+		System.out.println("거래번호: "+printedNum+" | "+"거래날짜: "+printedMonth+"월 "+printedDay+"일"+" | "+"거래종류: "+printedType+" | "+"거래액: "+printedMoney+"(원)"+" | "+"잔고: "+printedBalance+"(원)");
 	}
 	
 	public int printCheckAccountBalance(int foundNameIndex) {
@@ -283,9 +308,9 @@ class BankManageHandler {
 		System.out.println("");
 	}
 	
-	public void printSpecificAccountInfo(int findNameResultIndex, String accountNum) {
-		int foundAccountNumIndex = findSameAccountNum(findNameResultIndex, accountNum);
-		printOneAccountInfo(findNameResultIndex, foundAccountNumIndex);
+	public void printSpecificAccountInfo(int foundNameIndex, String accountNum) {
+		int foundAccountNumIndex = findSameAccountNum(foundNameIndex, accountNum);
+		printOneAccountInfo(foundNameIndex, foundAccountNumIndex);
 
 	}
 	
@@ -305,16 +330,31 @@ class BankManageHandler {
 		printEveryInfo(); // 모든 정보 출력 (이름, 주소, 전화번호, 신용등급)
 	}
 	
-	public void depositAction(int findNameResultIndex, String accountNum, int addMoney) {
+	public Transactions createTransactions(int month, int day, String type, int transactionMoney, int balance) {
+		Transactions newTransactions = null;
+		newTransactions = new Transactions(month, day, type, transactionMoney, balance); // 날짜 정보 받아서
+		
+		return newTransactions;
+	}
+	
+	public void depositAction(int foundNameIndex, String accountNum, int addMoney, int month, int day) {
 		int tempBalance = 0;
 		String tempAccountNum;
-		for(int i=0; i<clientManager.getClient(findNameResultIndex).getAccountCnt(); i++) {
-			tempAccountNum = clientManager.getClient(findNameResultIndex).getAccount(i).getAccountNum(); // 각 계좌의 계좌번호를 받아서 
-			tempBalance = clientManager.getClient(findNameResultIndex).getAccount(i).getBalance();
+		
+		String transactionType = "입금"; 
+		Transactions tempTransactions = null;
+		
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+			tempAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum(); // 각 계좌의 계좌번호를 받아서 
+			tempBalance = clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
 			
 			if(accountNum.compareTo(tempAccountNum)==0) { // 입력받은 계좌번호와 동일한 경우 	
 				tempBalance = tempBalance + addMoney;
-				clientManager.getClient(findNameResultIndex).getAccount(i).setBalance(tempBalance);
+				clientManager.getClient(foundNameIndex).getAccount(i).setBalance(tempBalance); // 입금 시키고 
+				
+				tempTransactions = createTransactions(month, day, transactionType, addMoney, tempBalance); // 날짜 정보 받아서
+				clientManager.getClient(foundNameIndex).getAccount(i).tManager.setTransactions(tempTransactions); // 새로운 거래내역 추가
+						
 				return;
 			}
 		}
@@ -339,18 +379,25 @@ class BankManageHandler {
 		}
 	}
 	
-	public void withdrawAction(int findNameResultIndex, String accountNum, int minusMoney) {
+	public void withdrawAction(int foundNameIndex, String accountNum, int minusMoney, int month, int day) {
 		int tempBalance = 0;
 		String tempAccountNum;
 		
-		for(int i=0; i<clientManager.getClient(findNameResultIndex).getAccountCnt(); i++) {
-			tempAccountNum = clientManager.getClient(findNameResultIndex).getAccount(i).getAccountNum();
-			tempBalance = clientManager.getClient(findNameResultIndex).getAccount(i).getBalance();
+		String transactionType = "출금";
+		Transactions tempTransactions = null;
+		
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+			tempAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum();
+			tempBalance = clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
 			
 			if(accountNum.compareTo(tempAccountNum)==0) {
 				tempBalance = tempBalance - minusMoney;
 				if(tempBalance >= 0) {
-					clientManager.getClient(findNameResultIndex).getAccount(i).setBalance(tempBalance);
+					clientManager.getClient(foundNameIndex).getAccount(i).setBalance(tempBalance); // 돈 출금하고 
+					
+					tempTransactions = createTransactions(month, day, transactionType, minusMoney, tempBalance); // 날짜 정보 받아서
+					clientManager.getClient(foundNameIndex).getAccount(i).tManager.setTransactions(tempTransactions); // 새로운 거래내역 추가
+					
 					return;
 				}else {
 					System.out.println("잔액이 부족합니다"); // 한도가 아직 없어서 일단 이렇게 
@@ -360,16 +407,38 @@ class BankManageHandler {
 		}
 	}
 	
-	public void checkSendMoneyLimit(int findNameResultIndex, String accountNum) {
+	public void withdrawTransferAction(int foundNameIndex, String accountNum, int minusMoney) {
+		int tempBalance = 0;
+		String tempAccountNum;		
+	
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+			tempAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum();
+			tempBalance = clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
+			
+			if(accountNum.compareTo(tempAccountNum)==0) {
+				tempBalance = tempBalance - minusMoney;
+				if(tempBalance >= 0) {
+					clientManager.getClient(foundNameIndex).getAccount(i).setBalance(tempBalance); // 돈 출금하고 
+				
+					return;
+				}else {
+					System.out.println("잔액이 부족합니다"); // 한도가 아직 없어서 일단 이렇게 
+					return;
+				}
+			}
+		}
+	}
+	
+	public void checkSendMoneyLimit(int foundNameIndex, String accountNum) {
 		int tempBalance = 0;
 		String tempAccountNum;
 		
-		for(int i=0; i<clientManager.getClient(findNameResultIndex).getAccountCnt(); i++) {
-			tempAccountNum = clientManager.getClient(findNameResultIndex).getAccount(i).getAccountNum();
-			tempBalance = clientManager.getClient(findNameResultIndex).getAccount(i).getBalance();
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+			tempAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum();
+			tempBalance = clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
 			
 			if(accountNum.compareTo(tempAccountNum)==0) {
-				System.out.println("최대 " +clientManager.getClient(findNameResultIndex).getAccount(i).getBalance() +"(원) 까지 송금 가능합니다.");
+				System.out.println("최대 " +clientManager.getClient(foundNameIndex).getAccount(i).getBalance() +"(원) 까지 송금 가능합니다.");
 			}
 		}
 	}
@@ -378,47 +447,58 @@ class BankManageHandler {
 	
 	public void deposit() {
 		String typedName = bankManageIOHandler.typeName(); // 이름 입력받고 
-		int findNameResultIndex = findNameGetIndex(typedName); // 이름 인덱스 확인 후 
-		printAccountInfo(findNameResultIndex); // 계좌 전부 보여주고 
-		System.out.println("입금할 계좌를 선택하세요.");
+		int foundNameIndex = findNameGetIndex(typedName); // 이름 인덱스 확인 후 
+		printAccountInfo(foundNameIndex); // 계좌 전부 보여주고 
 		String selectedAccountNum = bankManageIOHandler.selectAccountNum(); // 계좌입력받고
 		System.out.println("입금할 금액을 입력하세요.");
 		int addMoney = bankManageIOHandler.typeMoney(); // 입금액 입력받고 
-		depositAction(findNameResultIndex, selectedAccountNum, addMoney);
+		
+		
+		int selectedMonth = bankManageIOHandler.putMonthInfo();
+		int selectedDay = bankManageIOHandler.putDayInfo();
+
+		
+		
+		depositAction(foundNameIndex, selectedAccountNum, addMoney, selectedMonth, selectedDay); // 입금 액션 실행 
 	}
 	
 	public void withdraw() {
 		
 		String typedName = bankManageIOHandler.typeName();
-		int findNameResultIndex = findNameGetIndex(typedName);
-		printAccountInfo(findNameResultIndex);
-		System.out.println("출금할 계좌를 선택하세요.");
+		int foundNameIndex = findNameGetIndex(typedName);
+		printAccountInfo(foundNameIndex);
 		String selectedAccountNum = bankManageIOHandler.selectAccountNum();
 		System.out.println("출금할 금액을 입력하세요.");
 		int minusMoney = bankManageIOHandler.typeMoney();
-		withdrawAction(findNameResultIndex, selectedAccountNum, minusMoney);
+		
+		
+		int selectedMonth = bankManageIOHandler.putMonthInfo();
+		int selectedDay = bankManageIOHandler.putDayInfo();
+		
+		
+		withdrawAction(foundNameIndex, selectedAccountNum, minusMoney, selectedMonth, selectedDay);
 	}
 
 	
 	public void accountTransfer() {
 
 		String typedName = bankManageIOHandler.typeName();
-		int findNameResultIndex = findNameGetIndex(typedName);
-		printAccountInfo(findNameResultIndex);
+		int foundNameIndex = findNameGetIndex(typedName);
+		printAccountInfo(foundNameIndex);
 		System.out.println("계좌이체할 계좌를 선택하세요.");
 		String selectedWithdrawAccountNum = bankManageIOHandler.selectAccountNum();
 		
-		checkSendMoneyLimit(findNameResultIndex, selectedWithdrawAccountNum); // 송금 가능 금액 체크 
+		checkSendMoneyLimit(foundNameIndex, selectedWithdrawAccountNum); // 송금 가능 금액 체크 
 		
 		System.out.println("송금할 금액을 입력하세요.");
 		int sendMoney = bankManageIOHandler.typeMoney();
 		System.out.println("입금할 계좌를 선택하세요.");
 		String selectedDepositAccountNum = bankManageIOHandler.selectAccountNum();
 		
-		int checkProcessResult = bankManageIOHandler.checkProcess();
+		int checkProcessResult = bankManageIOHandler.checkProcess(); // 확인/취소 여부 
 		
 		if(checkProcessResult == 1) {
-			withdrawAction(findNameResultIndex, selectedWithdrawAccountNum, sendMoney);
+			withdrawTransferAction(foundNameIndex, selectedWithdrawAccountNum, sendMoney);
 			depositTransferAction(selectedDepositAccountNum, sendMoney);
 		}else {
 			return;
@@ -427,19 +507,29 @@ class BankManageHandler {
 	
 	public void showBalance() {
 		String typedName = bankManageIOHandler.typeName(); 
-		int findNameResultIndex = findNameGetIndex(typedName); // 이름 위치 찾고
+		int foundNameIndex = findNameGetIndex(typedName); // 이름 위치 찾고
 		
 		int printedType = bankManageIOHandler.selectPrintAccountInfoType(); // 출력 유형 선택 
 		
 		switch(printedType) {
 		case 1:
-			printAccountInfo(findNameResultIndex);
-			printTotalBalance(findNameResultIndex);
+			printAccountInfo(foundNameIndex);
+			printTotalBalance(foundNameIndex);
 			break;
 		case 2:
 			String selectedAccountNum = bankManageIOHandler.selectAccountNum(); // 계좌를 입력 받아서 
-			printSpecificAccountInfo(findNameResultIndex, selectedAccountNum); // 해당 계좌 정보만 출력 
+			printSpecificAccountInfo(foundNameIndex, selectedAccountNum); // 해당 계좌 정보만 출력 
 			break;
 		}
+	}
+	
+	public void showStatement() {
+		String typedName = bankManageIOHandler.typeName(); 
+		int foundNameIndex = findNameGetIndex(typedName); // 이름 위치 찾고 
+		String selectedAccount = bankManageIOHandler.selectAccountNum(); // 계좌 선택 
+		int foundAccountNumIndex = findSameAccountNum(foundNameIndex, selectedAccount);
+		// int selectedPeriod = bankManageIOHandler.selectTransactionPeriod(); // 거래기간 선택 
+	
+		showTransactionList(foundNameIndex, foundAccountNumIndex); // 거래내역 보여주기
 	}
 }
