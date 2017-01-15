@@ -8,6 +8,7 @@ class Transactions {
 	private int transactionBalance; // 거래 후 잔액 
 	private int transactionNum; // 거래 번호
 
+	private String transferTargetName; // 계좌이체 대상
 
 	public Transactions(int month, int day, String transactionType, int transactionMoney, int balance){
 		this.month = month;
@@ -17,8 +18,20 @@ class Transactions {
 		this.transactionBalance = balance;
 		this.transactionNum = 1;
 		transactionNum++;
-		
 	}
+	
+	public Transactions(int month, int day, String transactionType, int transactionMoney, int balance, String transferTargetName){
+		this.month = month;
+		this.day = day;
+		this.transactionType = transactionType;
+		this.transactionMoney = transactionMoney;
+		this.transactionBalance = balance;
+		this.transferTargetName = transferTargetName;
+		
+		this.transactionNum = 1;
+		transactionNum++;
+	}
+	
 	public void setMonth(int month) {
 		this.month = month;
 	}
@@ -67,4 +80,11 @@ class Transactions {
 		return transactionNum;
 	}
 	
+	public void setTransferName(String transferName) {
+		this.transferTargetName = transferName;
+	}
+	
+	public String getTransferName() {
+		return transferTargetName;
+	}
 }
