@@ -1,7 +1,8 @@
+import java.text.ParseException;
 import java.util.Scanner;
 
 class BankMain {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 
 		Scanner sc = new Scanner(System.in);
 		

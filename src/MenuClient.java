@@ -1,3 +1,4 @@
+import java.text.ParseException;
 import java.util.Scanner;
 
 class MenuClient {
@@ -5,7 +6,7 @@ class MenuClient {
 	Scanner sc = new Scanner(System.in);
 	Client client = new Client();
 
-	public void clientJob(BankManageHandler bankManageHandler, BankManageIOHandler bankManageIOHandler) {
+	public void clientJob(BankManageHandler bankManageHandler, BankManageIOHandler bankManageIOHandler) throws ParseException {
 
 		while (true) {
 			bankManageIOHandler.printClientMenu();

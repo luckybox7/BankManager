@@ -1,8 +1,7 @@
 
 class Transactions {
 	
-	private int month; // 거래(월)
-	private int day; // 거래(일)
+	private String dateInfo;
 	private String transactionType; // 거래 종류 
 	private int transactionMoney; // 거래 금액 
 	private int transactionBalance; // 거래 후 잔액 
@@ -10,9 +9,8 @@ class Transactions {
 
 	private String transferTargetName; // 계좌이체 대상
 
-	public Transactions(int month, int day, String transactionType, int transactionMoney, int balance){
-		this.month = month;
-		this.day = day;
+	public Transactions(String dateInfo, String transactionType, int transactionMoney, int balance){
+		this.dateInfo = dateInfo;
 		this.transactionType = transactionType;
 		this.transactionMoney = transactionMoney;
 		this.transactionBalance = balance;
@@ -20,9 +18,8 @@ class Transactions {
 		transactionNum++;
 	}
 	
-	public Transactions(int month, int day, String transactionType, int transactionMoney, int balance, String transferTargetName){
-		this.month = month;
-		this.day = day;
+	public Transactions(String dateInfo, String transactionType, int transactionMoney, int balance, String transferTargetName){
+		this.dateInfo = dateInfo;
 		this.transactionType = transactionType;
 		this.transactionMoney = transactionMoney;
 		this.transactionBalance = balance;
@@ -32,21 +29,29 @@ class Transactions {
 		transactionNum++;
 	}
 	
-	public void setMonth(int month) {
-		this.month = month;
+	public void setDateInfo(String dateInfo) {
+		this.dateInfo = dateInfo;
 	}
 	
-	public int getMonth() {
-		return month;
+	public String getDateInfo() {
+		return dateInfo;
 	}
 	
-	public void setDay(int day) {
-		this.day = day;
-	}
-	
-	public int getDay() {
-		return day;
-	}
+//	public void setMonth(int month) {
+//		this.month = month;
+//	}
+//	
+//	public int getMonth() {
+//		return month;
+//	}
+//	
+//	public void setDay(int day) {
+//		this.day = day;
+//	}
+//	
+//	public int getDay() {
+//		return day;
+//	}
 	
 	public void setTransactionMoney(int transactionMoney) {
 		this.transactionMoney = transactionMoney;

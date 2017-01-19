@@ -1,3 +1,6 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 interface INIT_MENU {
@@ -180,30 +183,14 @@ class BankManageIOHandler {
 		return selectedPeriod;
 	}
 	
-	public int putMonthInfo() {
+	public String putDateInfo() throws ParseException {
 		Scanner sc = new Scanner(System.in);
 		
-		int transMonth = 0;
-		System.out.println("거래 월 선택 ( 1 ~ 12 )");
-		System.out.print("선택 >> ");
+		System.out.println("날짜를 입력하세요 < yyyy-MM-dd 형태로 입력할 것 >");
+		System.out.print("입력: >> ");
+		String selectedDate = sc.nextLine();
 		
-		transMonth = sc.nextInt();
-		sc.nextLine();
-		
-		return transMonth;
-	}
-	
-	public int putDayInfo() {
-		Scanner sc = new Scanner(System.in);
-		
-		int transMonth = 0;
-		System.out.println("거래 일 선택 ( 1 ~ 31 )");
-		System.out.print("선택 >> ");
-		
-		transMonth = sc.nextInt();
-		sc.nextLine();
-		
-		return transMonth;
+		return selectedDate;
 	}
 	
 	
