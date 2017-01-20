@@ -14,8 +14,8 @@ class Transactions {
 		this.transactionType = transactionType;
 		this.transactionMoney = transactionMoney;
 		this.transactionBalance = balance;
-		this.transactionNum = 1;
-		transactionNum++;
+//		this.transactionNum = 1;
+//		transactionNum++;
 	}
 	
 	public Transactions(String dateInfo, String transactionType, int transactionMoney, int balance, String transferTargetName){
@@ -25,8 +25,8 @@ class Transactions {
 		this.transactionBalance = balance;
 		this.transferTargetName = transferTargetName;
 		
-		this.transactionNum = 1;
-		transactionNum++;
+//		this.transactionNum = 1;
+//		transactionNum++;
 	}
 	
 	public void setDateInfo(String dateInfo) {
@@ -36,22 +36,6 @@ class Transactions {
 	public String getDateInfo() {
 		return dateInfo;
 	}
-	
-//	public void setMonth(int month) {
-//		this.month = month;
-//	}
-//	
-//	public int getMonth() {
-//		return month;
-//	}
-//	
-//	public void setDay(int day) {
-//		this.day = day;
-//	}
-//	
-//	public int getDay() {
-//		return day;
-//	}
 	
 	public void setTransactionMoney(int transactionMoney) {
 		this.transactionMoney = transactionMoney;

@@ -34,7 +34,7 @@ class Teller {
 		
 		switch(printedType){
 		case 1:
-			bankManageHandler.printAllInfo();
+			bankManageHandler.printAllClientInfo();
 			break;
 		case 2:
 			String selectedName = bankManageIOHandler.typeName();

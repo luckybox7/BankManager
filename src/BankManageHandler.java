@@ -1,10 +1,9 @@
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
-import java.util.Scanner;
+
 
 class BankManageHandler {
 
@@ -15,8 +14,9 @@ class BankManageHandler {
 	final private int NOT_FOUND = -1;
 	
 	public int findNameGetIndex(String name) { // 이름 중복 확인 위한 메소드. 이름 있으면 해당 인덱스(i) 리턴, 없으면 -1 리턴 
-
-		for (int i = 0; i < clientManager.getClientCnt(); i++) {
+		
+//		for (int i = 0; i < clientManager.getClientCnt(); i++) {
+		for (int i = 0; i < clientManager.getClientList().size(); i++) {
 			if (name.compareTo(clientManager.getClient(i).getName()) == 0) {
 				return i;
 			}
@@ -50,9 +50,12 @@ class BankManageHandler {
 
 	public boolean checkAccountDuplicate(String accountNum) {
 		boolean check = false;
-
-		for (int i = 0; i < clientManager.getClientCnt(); i++) {
-			for (int j = 0; j < clientManager.getClient(i).getAccountCnt(); j++) {	
+		
+//		for (int i = 0; i < clientManager.getClientCnt(); i++) {
+//			for (int j = 0; j < clientManager.getClient(i).getAccountCnt(); j++) {	
+		
+		for (int i = 0; i < clientManager.getClientList().size(); i++) {
+			for (int j = 0; j < clientManager.getClientList().get(i).getAccountList().size(); j++) {
 				if (accountNum.compareTo(clientManager.getClient(i).getAccount(j).getAccountNum()) == 0 ) { // 모든 고객의 계좌번호 체크, 충복 발생 
 					check = true;
 					break;
@@ -93,7 +96,9 @@ class BankManageHandler {
 	public void accountToClient(int foundNameIndex, Account account){
 		
 		if(foundNameIndex == NOT_FOUND){ // 중복이 없으면 
-			clientManager.getClient(clientManager.getClientCnt()-1).setAccount(account);
+			clientManager.getClient(clientManager.getClientList().size()-1).setAccount(account);
+//			clientManager.getClient(clientManager.getClientCnt()-1).setAccount(account);
+			
 		}else{ // 중복이 있으면 
 			clientManager.getClient(foundNameIndex).setAccount(account);
 		}
@@ -105,7 +110,8 @@ class BankManageHandler {
 		String showAccountNum;
 		int showBalance;
 		
-		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+//		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) {
 			showAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum();
 			showBalance = clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
 			System.out.println("계좌번호 : "+ showAccountNum +" // 잔액 : "+ showBalance);
@@ -222,17 +228,21 @@ class BankManageHandler {
 		
 		if(period == 1) { // 하루 
 			System.out.println("오늘 하루의 거래 내역");
-			for(int i=0; i<clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransCnt(); i++) {
+			
+//			for(int i=0; i<clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransCnt(); i++) {
+			for(int i=0; i<clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactionList().size(); i++) {
 				printTransactionList(foundNameIndex, foundAccountNumIndex, i, period, todayInfo);
 			}
 		}else if(period == 2){ // 일주일
 			System.out.println("일주일 동안의 거래 내역");
-			for(int i=0; i<clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransCnt(); i++) {
+//			for(int i=0; i<clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransCnt(); i++) {
+			for(int i=0; i<clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactionList().size(); i++) {
 				printTransactionList(foundNameIndex, foundAccountNumIndex, i, period, todayInfo, weekAgoDate);
 			}
 		}else { // 한달 
 			System.out.println("한달 동안의 거래 내역");
-			for(int i=0; i<clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransCnt(); i++) {
+//			for(int i=0; i<clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransCnt(); i++) {
+			for(int i=0; i<clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactionList().size(); i++) {
 				printTransactionList(foundNameIndex, foundAccountNumIndex, i, period, todayInfo, monthAgoDate);
 			}
 		}
@@ -242,7 +252,8 @@ class BankManageHandler {
 		
 		int balanceResultIndex = 0; 
 		
-		for(int i=0; i<clientManager.getClient(duplicateNameIndex).getAccountCnt(); i++) {
+//		for(int i=0; i<clientManager.getClient(duplicateNameIndex).getAccountCnt(); i++) {
+		for(int i=0; i<clientManager.getClient(duplicateNameIndex).getAccountList().size(); i++) {
 			if(clientManager.getClient(duplicateNameIndex).getAccount(i).getBalance() != 0 ){ // 갖고있는 계좌 중 잔액이 0원이 아닌 계좌가 하나라도 있는 경우 
 				balanceResultIndex = NOT_FOUND;
 				break; // 하나라도 잔고가 0원이 아니면 삭제 불가하므로 for문을 빠져나간다. 
@@ -259,7 +270,7 @@ class BankManageHandler {
 		int balanceResultIndex = 0;
 		String selectedAccountNum = bankManageIOHandler.selectAccountNum();
 		
-		for(int i=0; i<clientManager.getClient(duplicateNameIndex).getAccountCnt(); i++) { // 해당 이름의 위치에서 갖고 있는 계좌 수만큼 반복하면서 	
+		for(int i=0; i<clientManager.getClient(duplicateNameIndex).getAccountList().size(); i++) { // 해당 이름의 위치에서 갖고 있는 계좌 수만큼 반복하면서 	
 			if(selectedAccountNum.equals(clientManager.getClient(duplicateNameIndex).getAccount(i).getAccountNum())){  // 입력받은 계좌번호와 동일한 계좌번호를 찾은 다음 
 				if(clientManager.getClient(duplicateNameIndex).getAccount(i).getBalance() != 0) { // 해당 계좌의 잔액이 0원이 아니면 삭제 불가 
 					balanceResultIndex = NOT_FOUND;
@@ -301,14 +312,15 @@ class BankManageHandler {
 		// dafault를 사용하면 안될 것 같은데 
 		default: // 인덱스가 넘어오는 경우 
 			clientManager.getClient(foundNameIndex).clearSpecificAccount(balanceResultIndex);
-			clientManager.getClient(foundNameIndex).rearrangeAccount(balanceResultIndex); // 배열 재배치 
+//			clientManager.getClient(foundNameIndex).rearrangeAccount(balanceResultIndex); // 배열 재배치 
 			break;
 		}
 	}
 	
 	public int findSameName(String name) {
 		int nameIndex = 0;
-		for(int i=0; i<clientManager.getClientCnt(); i++) {
+//		for(int i=0; i<clientManager.getClientCnt(); i++) {
+		for(int i=0; i<clientManager.getClientList().size(); i++) {
 			if(name.compareTo(clientManager.getClient(i).getName()) == 0) {
 				nameIndex = i;
 				break;
@@ -320,7 +332,8 @@ class BankManageHandler {
 	public int findSameAccountNum(int foundNameIndex, String accountNum) {
 		int tempAccountNumIndex = 0;
 		
-		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+//		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) {
 			String tempAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum();
 			if(accountNum.compareTo(tempAccountNum)==0) {
 				tempAccountNumIndex = i;
@@ -333,8 +346,11 @@ class BankManageHandler {
 	public int findReceiverIndex(String accountNum) {
 		int tempReceiverIndex = 0;
 		
-		for(int i=0; i<clientManager.getClientCnt(); i++) { // 등록된 고객 수만큼 확인하면서 
-			for(int j=0; j<clientManager.getClient(i).getAccountCnt(); j++) { // 고객들이 갖는 계좌 수만큼 다시 확인
+//		for(int i=0; i<clientManager.getClientCnt(); i++) { // 등록된 고객 수만큼 확인하면서
+//		for(int j=0; j<clientManager.getClient(i).getAccountCnt(); j++) { // 고객들이 갖는 계좌 수만큼 다시 확인
+			
+		for(int i=0; i<clientManager.getClientList().size(); i++) { 
+			for(int j=0; j<clientManager.getClient(i).getAccountList().size(); j++) { // 고객들이 갖는 계좌 수만큼 다시 확인
 				String tempAccountNum = clientManager.getClient(i).getAccount(j).getAccountNum(); 
 				
 				if(accountNum.compareTo(tempAccountNum)==0) {
@@ -348,7 +364,9 @@ class BankManageHandler {
 	
 	public void printBasicInfo(int foundNameIndex) {
 		System.out.println("==== 고객 정보를 출력합니다 ====");
-		for(int i=0; i<clientManager.getClientCnt(); i++) {
+		
+//		for(int i=0; i<clientManager.getClientCnt(); i++) {
+		for(int i=0; i<clientManager.getClientList().size(); i++) { 
 			if(clientManager.getClient(foundNameIndex).getName().compareTo(clientManager.getClient(i).getName())==0) {
 				clientManager.getClient(foundNameIndex).showClientBasicInfo();
 				return;
@@ -361,7 +379,9 @@ class BankManageHandler {
 		String printedAccountType;
 		int printedAccountBalance;
 
-		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+//		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) {
+			
 			printedAccountType = clientManager.getClient(foundNameIndex).getAccount(i).getAccountType();		
 			printedAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum();
 			printedAccountBalance = clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
@@ -400,7 +420,8 @@ class BankManageHandler {
 		String tempCheckAccount = "자유입출금 계좌";
 		int checkAccountTotalBalance = 0;
 	
-		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+//		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) {	
 			String tempAccountType = clientManager.getClient(foundNameIndex).getAccount(i).getAccountType();
 			
 			if(tempCheckAccount.compareTo(tempAccountType)==0) { // 자유입출금 계좌면 
@@ -415,7 +436,8 @@ class BankManageHandler {
 		String tempMinusAccount = "마이너스 계좌";
 		int minusAccountTotalBalance = 0;
 		
-		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+//		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) {
 			String tempAccountType = clientManager.getClient(foundNameIndex).getAccount(i).getAccountType();
 			
 			if(tempMinusAccount.compareTo(tempAccountType)==0){
@@ -452,7 +474,8 @@ class BankManageHandler {
 
 	
 	public void printEveryInfo() {
-		for(int i=0; i<clientManager.getClientCnt(); i++) {
+//		for(int i=0; i<clientManager.getClientCnt(); i++) {
+		for(int i=0; i<clientManager.getClientList().size(); i++) {
 			clientManager.getClient(i).showClientBasicInfo();
 			printAccountInfo(i);
 			printTotalBalance(i);
@@ -460,8 +483,10 @@ class BankManageHandler {
 		}
 	}
 	
-	public void printAllInfo() {		
-		Arrays.sort(clientManager.getClientList(), Client.clientNameComparator); // 정렬하고 
+	public void printAllClientInfo() {		
+//		Arrays.sort(clientManager.getClientList(), Client.clientNameComparator); // 정렬하고 
+		
+		Collections.sort(clientManager.getClientList(), Client.clientNameComparator);
 		printEveryInfo(); // 모든 정보 출력 (이름, 주소, 전화번호, 신용등급)
 	}
 	
@@ -486,7 +511,8 @@ class BankManageHandler {
 		String transactionType = "입금"; 
 		Transactions tempTransactions = null;
 		
-		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+//		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) {
 			tempAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum(); // 각 계좌의 계좌번호를 받아서 
 			tempBalance = clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
 			
@@ -509,7 +535,8 @@ class BankManageHandler {
 		String transactionType = "출금";
 		Transactions tempTransactions = null;
 		
-		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+//		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) {
 			tempAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum();
 			tempBalance = clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
 			
@@ -539,7 +566,8 @@ class BankManageHandler {
 		Transactions tempTransactions = null;
 		String senderName;
 		
-		for(int i=0; i<clientManager.getClient(foundReceiverNameIndex).getAccountCnt(); i++) { // 입금받는 대상의 계좌를 돌면서 
+//		for(int i=0; i<clientManager.getClient(foundReceiverNameIndex).getAccountCnt(); i++) { // 입금받는 대상의 계좌를 돌면서 
+		for(int i=0; i<clientManager.getClient(foundReceiverNameIndex).getAccountList().size(); i++) {
 			tempAccountNum = clientManager.getClient(foundReceiverNameIndex).getAccount(i).getAccountNum();
 			tempBalance = clientManager.getClient(foundReceiverNameIndex).getAccount(i).getBalance();
 			
@@ -565,7 +593,8 @@ class BankManageHandler {
 		Transactions tempTransactions = null;
 		String receiverName;
 	
-		for(int i=0; i<clientManager.getClient(foundSenderNameIndex).getAccountCnt(); i++) {
+//		for(int i=0; i<clientManager.getClient(foundSenderNameIndex).getAccountCnt(); i++) {
+		for(int i=0; i<clientManager.getClient(foundSenderNameIndex).getAccountList().size(); i++) {
 			tempAccountNum = clientManager.getClient(foundSenderNameIndex).getAccount(i).getAccountNum();
 			tempBalance = clientManager.getClient(foundSenderNameIndex).getAccount(i).getBalance();
 			
@@ -591,7 +620,8 @@ class BankManageHandler {
 		int tempBalance = 0;
 		String tempAccountNum;
 		
-		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+//		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountCnt(); i++) {
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) {
 			tempAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum();
 			tempBalance = clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
 			
