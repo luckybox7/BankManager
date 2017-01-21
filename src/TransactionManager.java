@@ -2,21 +2,21 @@ import java.util.ArrayList;
 
 class TransactionManager {
 	
-	private ArrayList<Transactions> transactionList;
+	private ArrayList<Transaction> transactionList;
 	
 	public TransactionManager() {
-		transactionList = new ArrayList<Transactions>();
+		transactionList = new ArrayList<Transaction>();
 	}
 	
-	public void setTransactions(Transactions transactions) {
+	public void setTransactions(Transaction transactions) {
 		transactionList.add(transactions);
 	}
 	
-	public Transactions getTransactions(int index) {
+	public Transaction getTransactions(int index) {
 		return transactionList.get(index);
 	}
 	
-	public ArrayList<Transactions> getTransactionList() {
+	public ArrayList<Transaction> getTransactionList() {
 		return transactionList;
 	}
 }

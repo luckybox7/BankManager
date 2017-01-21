@@ -1,8 +1,7 @@
 
-class Transactions {
+class Transaction {
 	
 	private String dateInfo;
-//	private String transactionType; // 거래 종류
 	private int transactionType;
 	private int transactionMoney; // 거래 금액 
 	private int transactionBalance; // 거래 후 잔액 
@@ -10,7 +9,7 @@ class Transactions {
 
 	private String transferTargetName; // 계좌이체 대상
 
-	public Transactions(String dateInfo, int transactionType, int transactionMoney, int balance){
+	public Transaction(String dateInfo, int transactionType, int transactionMoney, int balance){
 		this.dateInfo = dateInfo;
 		this.transactionType = transactionType;
 		this.transactionMoney = transactionMoney;
@@ -18,19 +17,29 @@ class Transactions {
 	}
 	
 	@Override
-	public String toString() {
+	public String toString() {		
+		String printedTransactionType;
+		
 		if(transactionType == Constant.TRNASACTION_TYPE.DEPOSIT || transactionType == Constant.TRNASACTION_TYPE.WITHDRAW){
-			return " | "+"거래날짜: "+dateInfo +" | "+"거래종류: "+transactionType+" | "+"거래액: "+transactionMoney+"(원)"+" | "+"잔고: "+transactionBalance+"(원)";
+			if(transactionType == Constant.TRNASACTION_TYPE.DEPOSIT) {
+				printedTransactionType = "입금";
+			}else{
+				printedTransactionType = "출금";
+			}
+			
+			return " | "+"거래날짜: "+dateInfo +" | "+"거래종류: "+printedTransactionType+" | "+"거래액: "+transactionMoney+"(원)"+" | "+"잔고: "+transactionBalance+"(원)";
 		}else{
 			if(transactionType == Constant.TRNASACTION_TYPE.TRANSFER_DEPOSIT) {
-				return " | "+"거래날짜: "+dateInfo +" | "+"거래종류: "+transactionType+" | "+"거래액: "+transactionMoney+"(원)"+" | "+"잔고: "+transactionBalance+"(원)"+" | "+"보낸이: "+transferTargetName;
+				printedTransactionType = "계좌이체(입금)";
+				return " | "+"거래날짜: "+dateInfo +" | "+"거래종류: "+printedTransactionType+" | "+"거래액: "+transactionMoney+"(원)"+" | "+"잔고: "+transactionBalance+"(원)"+" | "+"보낸이: "+transferTargetName;
 			}else{
-				return " | "+"거래날짜: "+dateInfo +" | "+"거래종류: "+transactionType+" | "+"거래액: "+transactionMoney+"(원)"+" | "+"잔고: "+transactionBalance+"(원)"+" | "+"받는이: "+transferTargetName;
+				printedTransactionType = "계좌이체(송금)";
+				return " | "+"거래날짜: "+dateInfo +" | "+"거래종류: "+printedTransactionType+" | "+"거래액: "+transactionMoney+"(원)"+" | "+"잔고: "+transactionBalance+"(원)"+" | "+"받는이: "+transferTargetName;
 			}
 		}		
 	}
 
-	public Transactions(String dateInfo, int transactionType, int transactionMoney, int balance, String transferTargetName){
+	public Transaction(String dateInfo, int transactionType, int transactionMoney, int balance, String transferTargetName){
 		this.dateInfo = dateInfo;
 		this.transactionType = transactionType;
 		this.transactionMoney = transactionMoney;
@@ -53,14 +62,6 @@ class Transactions {
 	public int getTransactionMoney() {
 		return transactionMoney;
 	}
-	
-//	public void setTransactionType(String transactionType) {
-//		this.transactionType = transactionType;
-//	}
-	
-//	public String getTransactionType() {
-//		return transactionType;
-//	}
 	
 	public void setTransactionType(int transactionType) {
 		this.transactionType = transactionType;

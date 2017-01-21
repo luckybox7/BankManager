@@ -107,14 +107,14 @@ class BankManageHandler {
 		}
 	}
 	
-	public void printTodayTransaction(int printedNum, Transactions t, int compare) {
+	public void printTodayTransaction(int printedNum, Transaction t, int compare) {
 		if(compare == 0) { // 오늘 날짜와 같은 경우 
 			System.out.print("거래번호: "+printedNum);
 			System.out.println(t);
 		}
 	}
 	
-	public void printPeriodTransaction(int printedNum, Transactions t, int compare1, int compare2) {
+	public void printPeriodTransaction(int printedNum, Transaction t, int compare1, int compare2) {
 		if(compare1 >= 0 && compare2 < 0) { // 오늘 날짜보다 작고 일주일(한달)전보다 큰 경우
 			System.out.print("거래번호: "+printedNum);
 			System.out.println(t);
@@ -128,7 +128,7 @@ class BankManageHandler {
 		int compare1 = todayInfo.compareTo(printedDate);
 		
 		if(period == 1) { // 하루
-			Transactions t = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex);
+			Transaction t = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex);
 			printTodayTransaction(transactionNum, t,compare1);
 		}
 
@@ -142,7 +142,7 @@ class BankManageHandler {
 		int compare1 = todayInfo.compareTo(printedDate); // 오늘과 입력받은 날짜 비교 
 		int compare2 = compareDay.compareTo(printedDate); 
 	
-		Transactions t = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex);
+		Transaction t = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex);
 		printPeriodTransaction(transactionNum, t, compare1, compare2);
 	}
 	
@@ -321,57 +321,25 @@ class BankManageHandler {
 	}
 	
 	public void printAccountInfo(int foundNameIndex) {
-		String printedAccountNum;
-		int printedAccountType;
-		int printedAccountBalance;
-
-		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) {
-			
-			printedAccountType = clientManager.getClient(foundNameIndex).getAccount(i).getAccountType();		
-			printedAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum();
-			printedAccountBalance = clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
-			
-			System.out.println("계좌종류: "+ printedAccountType + " | " + "계좌번호: "+ printedAccountNum + " | " + "잔액: "+ printedAccountBalance);
+		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) { 
+			Account a = clientManager.getClient(foundNameIndex).getAccountList().get(i); // toString을 이용해서 출력
+			System.out.println(a);
 		}	
 	}	
 	
 	public void printOneAccountInfo(int foundNameIndex, int foundAccountNumIndex) {
-		String printedAccountNum;
-		int printedAccountType;
-		int printedAccountBalance;
+		Account a = clientManager.getClient(foundNameIndex).getAccountList().get(foundAccountNumIndex);
+		System.out.println(a);
 		
-		printedAccountType = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).getAccountType();	
-		printedAccountNum = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).getAccountNum();
-		printedAccountBalance = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).getBalance();
-		
-		System.out.println("계좌종류: "+ printedAccountType + " | " + "계좌번호: "+ printedAccountNum + " | " + "잔액: "+ printedAccountBalance);
 	}
-	
-	public void printTransactionInfo(int foundNameIndex, int foundAccountNumIndex, int foundTransactionIndex) {
-		
-		int printedNum = foundTransactionIndex+1;
-		String printedDate = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex).getDateInfo();
-		int printedType = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex).getTransactionType();
-		int printedMoney = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex).getTransactionMoney();
-		int printedBalance = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex).getTransactionBalance();
-		String transferName = clientManager.getClient(foundNameIndex).getAccount(foundAccountNumIndex).tManager.getTransactions(foundTransactionIndex).getTransferName(); // -> 계좌이체시 상대 이름 
-
-//		printAction(printedNum, printedDate, printedType, printedMoney, printedBalance, transferName);
-	}
-
 	
 	public int printCheckAccountBalance(int foundNameIndex) {
-		
-//		String tempCheckAccount = "자유입출금 계좌";
 		int tempCheckAccount = Constant.ACCOUNT_TYPE.CHECK_ACCOUNT;
-		
 		int checkAccountTotalBalance = 0;
 	
 		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) {	
-//			String tempAccountType = clientManager.getClient(foundNameIndex).getAccount(i).getAccountType();
 			int tempAccountType = clientManager.getClient(foundNameIndex).getAccount(i).getAccountType();
 			
-//			if(tempCheckAccount.compareTo(tempAccountType)==0) { // 자유입출금 계좌면
 			if(tempCheckAccount == tempAccountType) {
 				checkAccountTotalBalance += clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
 			}
@@ -381,15 +349,12 @@ class BankManageHandler {
 	}
 	
 	public int printMinusAccountBalance(int foundNameIndex) {
-//		String tempMinusAccount = "마이너스 계좌";
 		int tempMinusAccount = Constant.ACCOUNT_TYPE.MINUS_ACCOUNT;
-
 		int minusAccountTotalBalance = 0;
 		
 		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) {
 			int tempAccountType = clientManager.getClient(foundNameIndex).getAccount(i).getAccountType();
 			
-//			if(tempMinusAccount.compareTo(tempAccountType)==0){
 			if(tempMinusAccount == tempAccountType){
 				minusAccountTotalBalance += clientManager.getClient(foundNameIndex).getAccount(i).getBalance();
 			}
@@ -437,16 +402,16 @@ class BankManageHandler {
 		printEveryInfo(); // 모든 정보 출력 (이름, 주소, 전화번호, 신용등급)
 	}
 	
-	public Transactions createTransactions(String date, int type, int transactionMoney, int balance) {
-		Transactions newTransactions = null;
-		newTransactions = new Transactions(date, type, transactionMoney, balance); // 날짜 정보 받아서
+	public Transaction createTransactions(String date, int type, int transactionMoney, int balance) {
+		Transaction newTransactions = null;
+		newTransactions = new Transaction(date, type, transactionMoney, balance); // 날짜 정보 받아서
 		
 		return newTransactions;
 	}
 	
-	public Transactions createTransactions(String date, int type, int transactionMoney, int balance, String receiverName) {
-		Transactions newTransactions = null;
-		newTransactions = new Transactions(date, type, transactionMoney, balance, receiverName); // 날짜 정보 받아서
+	public Transaction createTransactions(String date, int type, int transactionMoney, int balance, String receiverName) {
+		Transaction newTransactions = null;
+		newTransactions = new Transaction(date, type, transactionMoney, balance, receiverName); // 날짜 정보 받아서
 		
 		return newTransactions;
 	}
@@ -454,10 +419,8 @@ class BankManageHandler {
 	public void depositAction(int foundNameIndex, String accountNum, int addMoney, String selectedDate) {
 		int tempBalance = 0;
 		String tempAccountNum;
-		
-//		String transactionType = "입금"; 
 		int transactionType = Constant.TRNASACTION_TYPE.DEPOSIT;
-		Transactions tempTransactions = null;
+		Transaction tempTransactions = null;
 		
 		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) {
 			tempAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum(); // 각 계좌의 계좌번호를 받아서 
@@ -466,7 +429,6 @@ class BankManageHandler {
 			if(accountNum.compareTo(tempAccountNum)==0) { // 입력받은 계좌번호와 동일한 경우 	
 				tempBalance = tempBalance + addMoney;
 				clientManager.getClient(foundNameIndex).getAccount(i).setBalance(tempBalance); // 입금 시키고 
-				
 				tempTransactions = createTransactions(selectedDate, transactionType, addMoney, tempBalance); // 날짜 정보 받아서
 				clientManager.getClient(foundNameIndex).getAccount(i).tManager.setTransactions(tempTransactions); // 새로운 거래내역 추가
 						
@@ -478,11 +440,8 @@ class BankManageHandler {
 	public void withdrawAction(int foundNameIndex, String accountNum, int minusMoney, String selectedDate) {
 		int tempBalance = 0;
 		String tempAccountNum;
-		
-//		String transactionType = "출금";
 		int transactionType = Constant.TRNASACTION_TYPE.WITHDRAW;
-		
-		Transactions tempTransactions = null;
+		Transaction tempTransactions = null;
 		
 		for(int i=0; i<clientManager.getClient(foundNameIndex).getAccountList().size(); i++) {
 			tempAccountNum = clientManager.getClient(foundNameIndex).getAccount(i).getAccountNum();
@@ -493,7 +452,6 @@ class BankManageHandler {
 				
 				if(tempBalance >= 0) {
 					clientManager.getClient(foundNameIndex).getAccount(i).setBalance(tempBalance); // 돈 출금하고 
-					
 					tempTransactions = createTransactions(selectedDate, transactionType, minusMoney, tempBalance); // 날짜 정보 받아서
 					clientManager.getClient(foundNameIndex).getAccount(i).tManager.setTransactions(tempTransactions); // 새로운 거래내역 추가
 					
@@ -509,10 +467,8 @@ class BankManageHandler {
 	public void depositTransferAction(int foundReceiverNameIndex, String selectedDepositAccountNum, int addMoney, String selectedDate, int foundSenderNameIndex) {
 		int tempBalance = 0;
 		String tempAccountNum;
-		
-//		String transactionType = "계좌이체(입금)";
 		int transactionType = Constant.TRNASACTION_TYPE.TRANSFER_DEPOSIT;
-		Transactions tempTransactions = null;
+		Transaction tempTransactions = null;
 		String senderName;
 		 
 		for(int i=0; i<clientManager.getClient(foundReceiverNameIndex).getAccountList().size(); i++) {
@@ -522,7 +478,6 @@ class BankManageHandler {
 			if(selectedDepositAccountNum.compareTo(tempAccountNum)==0) {
 				tempBalance = tempBalance + addMoney;
 				clientManager.getClient(foundReceiverNameIndex).getAccount(i).setBalance(tempBalance);
-				
 				senderName = clientManager.getClient(foundSenderNameIndex).getName(); // 보낸사람 이름 확인
 				tempTransactions = createTransactions(selectedDate, transactionType, addMoney, tempBalance, senderName); // 거래내역 생성
 				clientManager.getClient(foundReceiverNameIndex).getAccount(i).tManager.setTransactions(tempTransactions); // 거래 추가 
@@ -535,11 +490,8 @@ class BankManageHandler {
 	public void withdrawTransferAction(int foundSenderNameIndex, String selectedWithdrawAccountNum, int minusMoney, String selectedDate, int foundReceiverNameIndex) {
 		int tempBalance = 0;
 		String tempAccountNum;
-	
-		
-//		String transactionType = "계좌이체(송금)";
 		int transactionType = Constant.TRNASACTION_TYPE.TRANSFER_WITHDRAW;
-		Transactions tempTransactions = null;
+		Transaction tempTransactions = null;
 		String receiverName;
 	
 		for(int i=0; i<clientManager.getClient(foundSenderNameIndex).getAccountList().size(); i++) {
@@ -550,7 +502,6 @@ class BankManageHandler {
 				tempBalance = tempBalance - minusMoney;
 				if(tempBalance >= 0) {
 					clientManager.getClient(foundSenderNameIndex).getAccount(i).setBalance(tempBalance); // 돈 출금하고 
-					
 					receiverName = clientManager.getClient(foundReceiverNameIndex).getName(); // 받는사람 이름 확인 
 					tempTransactions = createTransactions(selectedDate, transactionType, minusMoney, tempBalance, receiverName); // 받은 정보대로 새로운 거래내역 생성하는 구문 
 					clientManager.getClient(foundSenderNameIndex).getAccount(i).tManager.setTransactions(tempTransactions); // 새로운 거래내역 추가
