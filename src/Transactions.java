@@ -2,31 +2,40 @@
 class Transactions {
 	
 	private String dateInfo;
-	private String transactionType; // 거래 종류 
+//	private String transactionType; // 거래 종류
+	private int transactionType;
 	private int transactionMoney; // 거래 금액 
 	private int transactionBalance; // 거래 후 잔액 
 	private int transactionNum; // 거래 번호
 
 	private String transferTargetName; // 계좌이체 대상
 
-	public Transactions(String dateInfo, String transactionType, int transactionMoney, int balance){
+	public Transactions(String dateInfo, int transactionType, int transactionMoney, int balance){
 		this.dateInfo = dateInfo;
 		this.transactionType = transactionType;
 		this.transactionMoney = transactionMoney;
 		this.transactionBalance = balance;
-//		this.transactionNum = 1;
-//		transactionNum++;
 	}
 	
-	public Transactions(String dateInfo, String transactionType, int transactionMoney, int balance, String transferTargetName){
+	@Override
+	public String toString() {
+		if(transactionType == Constant.TRNASACTION_TYPE.DEPOSIT || transactionType == Constant.TRNASACTION_TYPE.WITHDRAW){
+			return " | "+"거래날짜: "+dateInfo +" | "+"거래종류: "+transactionType+" | "+"거래액: "+transactionMoney+"(원)"+" | "+"잔고: "+transactionBalance+"(원)";
+		}else{
+			if(transactionType == Constant.TRNASACTION_TYPE.TRANSFER_DEPOSIT) {
+				return " | "+"거래날짜: "+dateInfo +" | "+"거래종류: "+transactionType+" | "+"거래액: "+transactionMoney+"(원)"+" | "+"잔고: "+transactionBalance+"(원)"+" | "+"보낸이: "+transferTargetName;
+			}else{
+				return " | "+"거래날짜: "+dateInfo +" | "+"거래종류: "+transactionType+" | "+"거래액: "+transactionMoney+"(원)"+" | "+"잔고: "+transactionBalance+"(원)"+" | "+"받는이: "+transferTargetName;
+			}
+		}		
+	}
+
+	public Transactions(String dateInfo, int transactionType, int transactionMoney, int balance, String transferTargetName){
 		this.dateInfo = dateInfo;
 		this.transactionType = transactionType;
 		this.transactionMoney = transactionMoney;
 		this.transactionBalance = balance;
 		this.transferTargetName = transferTargetName;
-		
-//		this.transactionNum = 1;
-//		transactionNum++;
 	}
 	
 	public void setDateInfo(String dateInfo) {
@@ -45,11 +54,19 @@ class Transactions {
 		return transactionMoney;
 	}
 	
-	public void setTransactionType(String transactionType) {
+//	public void setTransactionType(String transactionType) {
+//		this.transactionType = transactionType;
+//	}
+	
+//	public String getTransactionType() {
+//		return transactionType;
+//	}
+	
+	public void setTransactionType(int transactionType) {
 		this.transactionType = transactionType;
 	}
 	
-	public String getTransactionType() {
+	public int getTransactionType() {
 		return transactionType;
 	}
 	

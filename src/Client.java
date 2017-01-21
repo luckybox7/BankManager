@@ -23,14 +23,6 @@ class Client {
 		
 		accountManager = new AccountManager();
 	}
-	
-//	public void setAccountCnt(int accountCnt){
-//		accountManager.setAccountCnt(accountCnt);
-//	}
-//	
-//	public int getAccountCnt(){
-//		return accountManager.getAccountCnt();
-//	}
 
 	public void setAccount(Account account){
 		accountManager.setAccount(account);
@@ -40,14 +32,6 @@ class Client {
 		return accountManager.getAccount(index);
 	}
 	
-//	public void setAccountArray(Account[] accountArr){
-//		accountManager.setAccountArray(accountArr);
-//	}
-//	
-//	public Account[] getAccountArray(){
-//		return accountManager.getAccountArray();
-//	}
-	
 	public void setAccountList(ArrayList<Account> list) {
 		accountManager.setAccountList(list);
 	}
@@ -56,8 +40,6 @@ class Client {
 		return accountManager.getAccountList();
 	}
 
-// 
-	
 	public void setName(String name){
 		this.name = name;
 	}
@@ -93,17 +75,12 @@ class Client {
 	public void clearAllAccount() {	
 		System.out.println("모든 계좌를 삭제합니다");
 		accountManager.setClearAll(); // ArrayList
-//		accountManager.setClearAll(null); // 배열 
 		System.out.println("모든 계좌 삭제 완료");
 	}
 	
 	public void clearSpecificAccount(int index) {
 		accountManager.setSpecificAccount(index); // List
 	}
-	
-//	public void rearrangeAccount(int index) {
-//		accountManager.setRearrangeAccount(index);
-//	}
 	
 	public void showClientBasicInfo() {
 		System.out.println(" ==== 계좌 정보를 출력합니다 ==== ");

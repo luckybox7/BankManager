@@ -13,16 +13,16 @@ class MenuTeller {
 			sc.nextLine();
 
 			switch (tellerChoice) {
-			case TELLER_MENU.OPENACCOUNT: // 계좌 개설
+			case Constant.TELLER_MENU.OPEN_ACCOUNT: // 계좌 개설
 				teller.openAccount();
 				break;
-			case TELLER_MENU.CLOSEACCOUNT:
+			case Constant.TELLER_MENU.CLOSE_ACCOUNT:
 				teller.closeAccount();
 				break;
-			case TELLER_MENU.SHOWCLIENT:
+			case Constant.TELLER_MENU.SHOW_CLIENT:
 				teller.showClient();
 				break;
-			case TELLER_MENU.EXIT:
+			case Constant.TELLER_MENU.EXIT:
 
 				return;
 			}

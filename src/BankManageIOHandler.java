@@ -1,19 +1,6 @@
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.Scanner;
-
-interface INIT_MENU {
-	int TELLER = 1, CLIENT = 2, EXIT = 3;
-}
-
-interface TELLER_MENU {
-	int OPENACCOUNT = 1, CLOSEACCOUNT = 2, SHOWCLIENT = 3, EXIT = 4;
-}
-
-interface CLIENT_MENU {
-	int DEPOSIT = 1, WITHDRAW = 2, ACCOUNTTRANSFER = 3, SHOWBALANCE = 4, SHOWSTATEMENT = 5, EXIT = 6;
-}
 
 class BankManageIOHandler {
 	public void printInitMenu() {
@@ -85,8 +72,7 @@ class BankManageIOHandler {
 	
 	public Client typeClientData(String name) {
 		
-		Scanner sc = new Scanner(System.in)
-				;
+		Scanner sc = new Scanner(System.in);
 		System.out.println("신규 고객입니다. 하단에 추가 정보를 입력하세요.");
 		System.out.print("2.주소 입력 : ");
 		String newAdd = sc.nextLine();
@@ -193,5 +179,12 @@ class BankManageIOHandler {
 		return selectedDate;
 	}
 	
+	public void loadBank(ArrayList<Client> clientList) {
+		
+	}
+	
+	public void saveBank(ArrayList<Client> clientList) {
+		
+	}
 	
 }

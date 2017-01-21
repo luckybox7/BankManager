@@ -8,6 +8,8 @@ class BankMain {
 		
 		MenuTeller tr = new MenuTeller();
 		MenuClient ct = new MenuClient();
+		Constant cs = new Constant();
+		
 		BankManageHandler bankManageHandler = new BankManageHandler();
 		BankManageIOHandler bankManageIOHandler = new BankManageIOHandler();
 		
@@ -18,13 +20,13 @@ class BankMain {
 			sc.nextLine(); // 버퍼비우기  
 
 			switch (choice) {
-			case INIT_MENU.TELLER:
+			case Constant.INIT_MENU.TELLER:
 				tr.tellerJob(bankManageHandler, bankManageIOHandler);
 				break;
-			case INIT_MENU.CLIENT:
+			case Constant.INIT_MENU.CLIENT:
 				ct.clientJob(bankManageHandler, bankManageIOHandler);
 				break;
-			case INIT_MENU.EXIT:
+			case Constant.INIT_MENU.EXIT:
 				System.out.println("프로그램을 종료합니다");
 				return;
 			}

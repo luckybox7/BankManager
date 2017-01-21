@@ -1,11 +1,11 @@
 
 class Account { //자유입출금 
 		
-	public final int MAX_TRANSACTIONS = 100;
 	protected String accountNum; // 계좌번호 
 	protected int balance; // 잔액
 	protected TransactionManager tManager;
-	protected String accountType; // 계좌종류
+//	protected String accountType; // 계좌종류
+	protected int accountType;
 	
 	public Account(){
 		
@@ -34,7 +34,11 @@ class Account { //자유입출금
 		return balance;
 	}
 	
-	public String getAccountType() {
+//	public String getAccountType() {
+//		return accountType;
+//	}
+	
+	public int getAccountType() {
 		return accountType;
 	}
 }
@@ -43,7 +47,8 @@ class CheckAccount extends Account{
 	
 	public CheckAccount(String accountNum){
 		super(accountNum);
-		accountType = "자유입출금 계좌";
+//		accountType = "자유입출금 계좌";
+		accountType = Constant.ACCOUNT_TYPE.CHECK_ACCOUNT;
 	}
 }
 
@@ -54,6 +59,7 @@ class MinusAccount extends Account{ // 마이너스 계좌
 	public MinusAccount(String accountNum, String creditLimit){
 		super(accountNum);
 		this.creditLimit = creditLimit;
-		accountType = "마이너스 계좌";
+//		accountType = "마이너스 계좌";
+		accountType = Constant.ACCOUNT_TYPE.MINUS_ACCOUNT;
 	}
 }

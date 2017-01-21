@@ -14,22 +14,22 @@ class MenuClient {
 			sc.nextLine();
 			
 			switch(clientChoice) {
-			case CLIENT_MENU.DEPOSIT:
+			case Constant.CLIENT_MENU.DEPOSIT:
 				bankManageHandler.deposit();
 				break;
-			case CLIENT_MENU.WITHDRAW:
+			case Constant.CLIENT_MENU.WITHDRAW:
 				bankManageHandler.withdraw();
 				break;
-			case CLIENT_MENU.ACCOUNTTRANSFER:
+			case Constant.CLIENT_MENU.ACCOUNT_TRANSFER:
 				bankManageHandler.accountTransfer();
 				break;
-			case CLIENT_MENU.SHOWBALANCE:
+			case Constant.CLIENT_MENU.SHOW_BALANCE:
 				bankManageHandler.showBalance();
 				break;
-			case CLIENT_MENU.SHOWSTATEMENT:
+			case Constant.CLIENT_MENU.SHOW_STATEMENT:
 				bankManageHandler.showStatement();
 				break;
-			case CLIENT_MENU.EXIT:
+			case Constant.CLIENT_MENU.EXIT:
 				return;
 			}
 		}
