@@ -6,8 +6,8 @@ class BankMain {
 
 		Scanner sc = new Scanner(System.in);
 		
-		MenuTeller tr = new MenuTeller();
-		MenuClient ct = new MenuClient();
+		MenuTeller menuTeller = new MenuTeller();
+		MenuClient menuClient = new MenuClient();
 		Constant cs = new Constant();
 		
 		BankManageHandler bankManageHandler = new BankManageHandler();
@@ -21,10 +21,10 @@ class BankMain {
 
 			switch (choice) {
 			case Constant.INIT_MENU.TELLER:
-				tr.tellerJob(bankManageHandler, bankManageIOHandler);
+				menuTeller.tellerJob(bankManageHandler, bankManageIOHandler);
 				break;
 			case Constant.INIT_MENU.CLIENT:
-				ct.clientJob(bankManageHandler, bankManageIOHandler);
+				menuClient.clientJob(bankManageHandler, bankManageIOHandler);
 				break;
 			case Constant.INIT_MENU.EXIT:
 				System.out.println("프로그램을 종료합니다");

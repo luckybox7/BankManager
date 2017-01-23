@@ -8,11 +8,11 @@ class TransactionManager {
 		transactionList = new ArrayList<Transaction>();
 	}
 	
-	public void setTransactions(Transaction transactions) {
+	public void setTransaction(Transaction transactions) {
 		transactionList.add(transactions);
 	}
 	
-	public Transaction getTransactions(int index) {
+	public Transaction getTransaction(int index) {
 		return transactionList.get(index);
 	}
 	

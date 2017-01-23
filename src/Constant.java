@@ -20,4 +20,20 @@ public class Constant {
 	public static interface TRNASACTION_TYPE {
 		int DEPOSIT = 1, WITHDRAW = 2, TRANSFER_DEPOSIT = 3, TRANSFER_WITHDRAW = 4;
 	}
+	
+	public static interface FOUND_RESULT {
+		int NOT_FOUND = -1, CANNOT_DELETE = -2, DELETE_ALL = -3;
+	}
+	
+	public static interface DELETE_TYPE {
+		int ALL = 1, SPECIFIC = 2;
+	}
+	
+	public static interface DECISION {
+		int YES = 1, NO = 2;
+	}
+	
+	public static interface PRINT_TYPE {
+		int ALL = 1, SPECEFIC = 2;
+	}
 }
