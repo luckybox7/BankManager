@@ -8,7 +8,7 @@ public class ClientManager {
 		clientList = new ArrayList<Client>();
 	}
 	
-	public void setClient(Client client) {
+	public void insertClient(Client client) {
 		clientList.add(client);	
 	}
 	
@@ -16,7 +16,7 @@ public class ClientManager {
 		return clientList.get(index);
 	}
 	
-	public void setClearClient(int index) { // 이름바꾸기 -> 기능: 고객 정보 하나 삭제하는 것.	
+	public void clearClient(int index) { // 이름바꾸기 -> 기능: 고객 정보 하나 삭제하는 것.	
 		clientList.remove(index);
 	}
 	

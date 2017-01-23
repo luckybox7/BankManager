@@ -8,7 +8,7 @@ public class AccountManager {
 		accountList = new ArrayList<Account>();
 	}
 	
-	public void setAccount(Account account) {
+	public void insertAccount(Account account) {
 		accountList.add(account);
 		
 	}
@@ -26,11 +26,11 @@ public class AccountManager {
 		return accountList;
 	}
 	
-	public void setClearAll() {
+	public void clearAllAccount() {
 		this.accountList.clear();
 	}
 	
-	public void setSpecificAccount(int index) {
+	public void clearSpecificAccount(int index) {
 		accountList.remove(index);
 	}
 }

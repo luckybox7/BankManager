@@ -8,7 +8,7 @@ class TransactionManager {
 		transactionList = new ArrayList<Transaction>();
 	}
 	
-	public void setTransaction(Transaction transactions) {
+	public void insertTransaction(Transaction transactions) {
 		transactionList.add(transactions);
 	}
 	

@@ -33,10 +33,10 @@ class Teller {
 		int printedType = bankManageIOHandler.selectPrintClientType();
 		
 		switch(printedType){
-		case 1:
+		case Constant.PRINT_TYPE.ALL:
 			bankManageHandler.printAllClientInfo();
 			break;
-		case 2:
+		case Constant.PRINT_TYPE.SPECEFIC:
 			String selectedName = bankManageIOHandler.typeName();
 			bankManageHandler.printSpecificClientInfo(selectedName);
 			break;

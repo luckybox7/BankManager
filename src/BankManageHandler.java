@@ -25,7 +25,7 @@ class BankManageHandler {
 											
 		if (index == Constant.FOUND_RESULT.NOT_FOUND) {		
 			Client newClient = bankManageIOHandler.typeClientData(name);
-			clientManager.setClient(newClient);
+			clientManager.insertClient(newClient);
 		} else {
 			System.out.println("기존 고객입니다. 해당 정보에 계좌만 추가합니다.");
 		}
@@ -272,7 +272,7 @@ class BankManageHandler {
 			break;
 		case Constant.FOUND_RESULT.DELETE_ALL: // 전체 삭제 
 			clientManager.getClient(foundNameIndex).clearAllAccount();
-			clientManager.setClearClient(foundNameIndex);
+			clientManager.clearClient(foundNameIndex);
 			break;
 		case Constant.FOUND_RESULT.NOT_FOUND:
 			System.out.println("해당 계좌를 찾을 수 없습니다.");
@@ -426,7 +426,7 @@ class BankManageHandler {
 				clientManager.getClient(foundNameIndex).getAccount(i).setBalance(tempBalance); // 입금 시키고 
 				Transaction transaction = new Transaction(selectedDate, Constant.TRNASACTION_TYPE.DEPOSIT, addMoney, tempBalance); // 날짜 정보 받아서
 				
-				clientManager.getClient(foundNameIndex).getAccount(i).tManager.setTransaction(transaction); // 새로운 거래내역 추가
+				clientManager.getClient(foundNameIndex).getAccount(i).tManager.insertTransaction(transaction); // 새로운 거래내역 추가
 						
 				return;
 			}
@@ -444,7 +444,7 @@ class BankManageHandler {
 				if(tempBalance > minusMoney) {
 					clientManager.getClient(foundNameIndex).getAccount(i).setBalance(tempBalance); // 돈 출금하고 
 					Transaction transaction = new Transaction(selectedDate, Constant.TRNASACTION_TYPE.WITHDRAW, minusMoney, tempBalance); // 날짜 정보 받아서
-					clientManager.getClient(foundNameIndex).getAccount(i).tManager.setTransaction(transaction); // 새로운 거래내역 추가
+					clientManager.getClient(foundNameIndex).getAccount(i).tManager.insertTransaction(transaction); // 새로운 거래내역 추가
 				}else {
 					System.out.println("잔액이 부족합니다"); // 한도가 아직 없어서 일단 이렇게 
 				}
@@ -463,7 +463,7 @@ class BankManageHandler {
 				clientManager.getClient(foundReceiverNameIndex).getAccount(i).setBalance(tempBalance);
 				String senderName = clientManager.getClient(foundSenderNameIndex).getName(); // 보낸사람 이름 확인
 				Transaction transaction = new Transaction(selectedDate, Constant.TRNASACTION_TYPE.TRANSFER_DEPOSIT, addMoney, tempBalance, senderName); // 거래내역 생성
-				clientManager.getClient(foundReceiverNameIndex).getAccount(i).tManager.setTransaction(transaction); // 거래 추가 
+				clientManager.getClient(foundReceiverNameIndex).getAccount(i).tManager.insertTransaction(transaction); // 거래 추가 
 				
 				return;
 			}
@@ -481,7 +481,7 @@ class BankManageHandler {
 					clientManager.getClient(foundSenderNameIndex).getAccount(i).setBalance(tempBalance); // 돈 출금하고 
 					String receiverName = clientManager.getClient(foundReceiverNameIndex).getName(); // 받는사람 이름 확인 
 					Transaction transaction = new Transaction(selectedDate, Constant.TRNASACTION_TYPE.TRANSFER_WITHDRAW, minusMoney, tempBalance, receiverName); // 받은 정보대로 새로운 거래내역 생성하는 구문 
-					clientManager.getClient(foundSenderNameIndex).getAccount(i).tManager.setTransaction(transaction); // 새로운 거래내역 추가
+					clientManager.getClient(foundSenderNameIndex).getAccount(i).tManager.insertTransaction(transaction); // 새로운 거래내역 추가
 				}else {
 					System.out.println("잔액이 부족합니다"); // 한도가 아직 없어서 일단 이렇게 
 				}

@@ -25,7 +25,7 @@ class Client {
 	}
 
 	public void setAccount(Account account){
-		accountManager.setAccount(account);
+		accountManager.insertAccount(account);
 	}
 	
 	public Account getAccount(int index){
@@ -74,12 +74,12 @@ class Client {
 	
 	public void clearAllAccount() {	
 		System.out.println("모든 계좌를 삭제합니다");
-		accountManager.setClearAll(); // ArrayList
+		accountManager.clearAllAccount(); // ArrayList
 		System.out.println("모든 계좌 삭제 완료");
 	}
 	
 	public void clearSpecificAccount(int index) {
-		accountManager.setSpecificAccount(index); // List
+		accountManager.clearSpecificAccount(index); // List
 	}
 	
 	public void showClientBasicInfo() {
