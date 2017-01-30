@@ -2,6 +2,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 
@@ -78,6 +79,7 @@ class BankManageHandler {
 			account = new CheckAccount(tempAccountNum);
 		} else {
 			account = new MinusAccount(tempAccountNum, "8");
+			//TODO
 		}
 		return account;
 	}
@@ -406,7 +408,14 @@ class BankManageHandler {
 	}
 	
 	public void printAllClientInfo() {		
-		Collections.sort(clientManager.getClientList(), Client.clientNameComparator);
+//		Collections.sort(clientManager.getClientList(), Client.clientNameComparator); // 가나다순 정렬
+		
+		//TODO
+		Collections.sort(clientManager.getClientList(), new Comparator<Client>(){
+			public int compare(Client c1, Client c2){
+				return c1.getName().compareTo(c2.getName());
+			}
+		});
 		
 		for(int i=0; i<clientManager.getClientList().size(); i++) {
 			clientManager.getClient(i).showClientBasicInfo();

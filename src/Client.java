@@ -1,9 +1,7 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Scanner;
 
-class Client {
+class Client{
 	
 	private String name; // 이름 
 	private String address; // 주소 

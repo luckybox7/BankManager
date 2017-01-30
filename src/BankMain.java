@@ -1,8 +1,9 @@
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
 
 class BankMain {
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) throws ParseException{
 
 		Scanner sc = new Scanner(System.in);
 		
@@ -14,6 +15,8 @@ class BankMain {
 		BankManageIOHandler bankManageIOHandler = new BankManageIOHandler();
 		
 		System.out.println("===== 은행관리 프로그램을 시작합니다 =====");
+//		bankManageIOHandler.loadBank(bankManageHandler.clientManager); // 파일 생성 
+		
 		while (true) {
 			bankManageIOHandler.printInitMenu();
 			int choice = sc.nextInt();
@@ -27,6 +30,7 @@ class BankMain {
 				menuClient.clientJob(bankManageHandler, bankManageIOHandler);
 				break;
 			case Constant.INIT_MENU.EXIT:
+//				bankManageIOHandler.saveBank(bankManageHandler.clientManager); // 파일 저장 
 				System.out.println("프로그램을 종료합니다");
 				return;
 			}

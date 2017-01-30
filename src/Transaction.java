@@ -1,5 +1,5 @@
 
-class Transaction {
+class Transaction{
 	
 	private String dateInfo;
 	private int transactionType;

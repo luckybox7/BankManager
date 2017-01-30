@@ -1,5 +1,5 @@
 
-class Account { //자유입출금 
+class Account{ //자유입출금 
 		
 	protected String accountNum; // 계좌번호 
 	protected int balance; // 잔액

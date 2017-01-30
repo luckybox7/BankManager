@@ -1,8 +1,11 @@
+import java.io.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 class BankManageIOHandler {
+	private final File bankDataFile = new File("BankInfo.dat");
+	
 	public void printInitMenu() {
 		System.out.println("===== 원하는 업무를 선택해주세요    =====");
 		System.out.println("1. 은행원 ");
@@ -174,12 +177,58 @@ class BankManageIOHandler {
 		return selectedDate;
 	}
 	
-	public void loadBank(ArrayList<Client> clientList) {
+	public void loadBank(ClientManager clientManager){
+		if(bankDataFile.exists() == false){
+			return;
+		}
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
 		
+		ArrayList<Client> arrayList = new ArrayList<Client>();
+		
+		try{
+			fis = new FileInputStream(bankDataFile);
+			ois = new ObjectInputStream(fis);
+			
+			arrayList = (ArrayList)ois.readObject();
+			ois.close();
+			fis.close();
+			
+			
+//			while(true) {
+//				Client client2 = (Client)ois.readObject();
+//				clientManager.getClientList().add(client2);
+//			}
+			
+		} catch (Exception e) {
+			
+		}
+//		finally {
+//			ois.close();
+//		}
 	}
 	
-	public void saveBank(ArrayList<Client> clientList) {
+	public void saveBank(ClientManager clientManager) {
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
 		
+		ArrayList<Client> clientList = new ArrayList<Client>();
+		
+		try {
+			fos = new FileOutputStream(bankDataFile);
+			oos = new ObjectOutputStream(fos);
+			
+			for(int i=0; i<clientManager.getClientList().size(); i++) {
+				clientList.add(clientManager.getClientList().get(i));
+//				oos.writeObject(clientManager.getClientList().get(i));
+			}
+			
+			oos.writeObject(clientList);
+			oos.close();
+			fos.close();
+			
+		} catch (IOException e) {
+			
+		}
 	}
-	
 }
