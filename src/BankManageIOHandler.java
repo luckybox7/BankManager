@@ -177,56 +177,44 @@ class BankManageIOHandler {
 		return selectedDate;
 	}
 	
-	public void loadBank(ClientManager clientManager){
+	public void loadBank(ClientManager clientManager) throws IOException{
 		if(bankDataFile.exists() == false){
 			return;
 		}
+		
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
-		
-		ArrayList<Client> arrayList = new ArrayList<Client>();
-		
+	
 		try{
 			fis = new FileInputStream(bankDataFile);
 			ois = new ObjectInputStream(fis);
 			
-			arrayList = (ArrayList)ois.readObject();
-			ois.close();
-			fis.close();
-			
-			
-//			while(true) {
-//				Client client2 = (Client)ois.readObject();
-//				clientManager.getClientList().add(client2);
-//			}
+			while(true) {
+				Client client = (Client)ois.readObject();
+				clientManager.getClientList().add(client);
+			}
 			
 		} catch (Exception e) {
 			
+		} finally {
+			ois.close();
 		}
-//		finally {
-//			ois.close();
-//		}
 	}
 	
 	public void saveBank(ClientManager clientManager) {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
-		
-		ArrayList<Client> clientList = new ArrayList<Client>();
-		
+			
 		try {
 			fos = new FileOutputStream(bankDataFile);
 			oos = new ObjectOutputStream(fos);
 			
 			for(int i=0; i<clientManager.getClientList().size(); i++) {
-				clientList.add(clientManager.getClientList().get(i));
-//				oos.writeObject(clientManager.getClientList().get(i));
+					oos.writeObject(clientManager.getClientList().get(i));
 			}
-			
-			oos.writeObject(clientList);
+
 			oos.close();
-			fos.close();
-			
+	
 		} catch (IOException e) {
 			
 		}

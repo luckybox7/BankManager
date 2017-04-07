@@ -15,6 +15,12 @@ class Teller {
 		int foundNameIndex = bankManageHandler.getFoundIndex(tempName); // 입력받은 이름의 중복 위치 인덱스를 넘겨받고 
 		bankManageHandler.addNewClient(tempName, foundNameIndex); // 이름으로 기존고객/신규고객 확인, 신규고객일 경우 새로운 Client 정보 추가
 		Account account = bankManageHandler.createAccount(); // 계좌 선택에 따른 종류별 계좌 생성  
+		
+		// 정보 연결 전 신용등급 및 대출한도에 대한 설정 필요 
+		
+		
+		
+		
 		bankManageHandler.attachAccount(foundNameIndex, account); // 계좌 정보를 고객에 연결 
 	}
 	

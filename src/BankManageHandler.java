@@ -78,8 +78,16 @@ class BankManageHandler {
 		if (selectResult == 1) {
 			account = new CheckAccount(tempAccountNum);
 		} else {
-			account = new MinusAccount(tempAccountNum, "8");
+			account = new MinusAccount(tempAccountNum); 
 			//TODO
+			
+			
+			
+			// MinusAccount 생성자 만들어질 때 신용등급 생김
+			// MinusAccount만들면 신용등급 변경 필요 
+			
+			
+			
 		}
 		return account;
 	}

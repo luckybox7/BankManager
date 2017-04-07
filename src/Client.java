@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-class Client{
+class Client implements Serializable{
 	
 	private String name; // 이름 
 	private String address; // 주소 

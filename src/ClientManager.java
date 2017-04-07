@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ClientManager {
+public class ClientManager implements Serializable{
 
 	private ArrayList<Client> clientList;
 	

@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-class TransactionManager {
+class TransactionManager implements Serializable{
 	
 	private ArrayList<Transaction> transactionList;
 	

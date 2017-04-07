@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-class Account{ //자유입출금 
+class Account implements Serializable{ //자유입출금 
 		
 	protected String accountNum; // 계좌번호 
 	protected int balance; // 잔액
@@ -63,13 +64,31 @@ class CheckAccount extends Account{
 
 class MinusAccount extends Account{ // 마이너스 계좌 
 
-	protected String creditLimit; // 대출한도 
+	protected int creditGrade; // 신용등급 
+	protected int loanLimit; // 대출한도
 	 
-	public MinusAccount(String accountNum, String creditLimit){
+//	public MinusAccount(String accountNum, String creditLimit){
+//		super(accountNum);
+//		this.creditLimit = creditLimit;
+//		accountType = Constant.ACCOUNT_TYPE.MINUS_ACCOUNT;
+//	}
+	
+	public MinusAccount(String accountNum) {
 		super(accountNum);
-		this.creditLimit = creditLimit;
 		accountType = Constant.ACCOUNT_TYPE.MINUS_ACCOUNT;
+		
+		this.creditGrade = Constant.CREDIT_GRADE.CREDIT_BASIC; // 신용등급 - 기본 8등급 
+		
+		//TODO
+		// accountType은 this. 안해줘도 되는가? 
 	}
 	
+	public void setCredit(int creditLimit) {
+		this.creditGrade = creditLimit;
+	}
+	
+	public int getCredit() {
+		return creditGrade;
+	}
 	
 }

@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-class Transaction{
+class Transaction implements Serializable{
 	
 	private String dateInfo;
 	private int transactionType;

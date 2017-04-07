@@ -36,4 +36,8 @@ public class Constant {
 	public static interface PRINT_TYPE {
 		int ALL = 1, SPECEFIC = 2;
 	}
+	
+	public static interface CREDIT_GRADE {
+		int CREDIT_BASIC = 8;
+	}
 }

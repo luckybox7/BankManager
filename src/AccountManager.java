@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class AccountManager {
+public class AccountManager implements Serializable{
 	
 	private ArrayList<Account> accountList;
 	
